@@ -496,19 +496,35 @@
       })[c]);
     }
 
-    // Smart Multi-Path Model Fetcher
+    // Smart Multi-Path Model Fetcher & Local Catalog Integration
+    let localCatalog = null;
+
+    async function getLocalCatalog() {
+      if (localCatalog) return localCatalog;
+      const paths = ["data/catalog.json", "../data/catalog.json", "/data/catalog.json"];
+      for (const p of paths) {
+        try {
+          const res = await axios.get(p, { timeout: 3000 });
+          if (res.data && res.data.groups) {
+            localCatalog = res.data;
+            return localCatalog;
+          }
+        } catch (e) {}
+      }
+      return null;
+    }
+
     async function fetchModelData(modelFile, params = {}) {
       try {
-        const res = await axios.get(`Backend/model/${modelFile}`, { params, timeout: 3000 });
-        if (res.data) return res.data;
+        const res = await axios.get(`Backend/model/${modelFile}`, { params, timeout: 2500 });
+        if (res.data && (res.data.data || res.data.length)) return res.data;
       } catch (e) {}
 
       try {
-        const res = await axios.get(`https://main.farmstation.ph/Backend/model/${modelFile}`, { params, timeout: 5000 });
-        if (res.data) return res.data;
-      } catch (e) {
-        console.warn(`Could not reach ${modelFile}`, e);
-      }
+        const res = await axios.get(`../Backend/model/${modelFile}`, { params, timeout: 2500 });
+        if (res.data && (res.data.data || res.data.length)) return res.data;
+      } catch (e) {}
+
       return null;
     }
 
@@ -516,19 +532,29 @@
     async function LoadProductGroups() {
       const GridProdGroup = document.getElementById("GridProdGroup");
 
-      // Fallback groups
-      const fallbackGroups = [
-        { GroupCode: "1", GroupName: "CHEMICALS" },
-        { GroupCode: "29", GroupName: "FARM SUPPLIES" },
-        { GroupCode: "2", GroupName: "FEEDS" },
-        { GroupCode: "3", GroupName: "FERTILIZER" },
-        { GroupCode: "4", GroupName: "MEDICINE" },
-        { GroupCode: "5", GroupName: "PET FOOD" },
-        { GroupCode: "6", GroupName: "SEEDS" }
-      ];
-
+      let data = null;
       const res = await fetchModelData("LoadProductGroup.php");
-      const data = (res && res.data && res.data.length) ? res.data : fallbackGroups;
+      if (res && res.data && res.data.length) {
+        data = res.data;
+      } else {
+        const cat = await getLocalCatalog();
+        if (cat && cat.groups) {
+          data = cat.groups;
+        }
+      }
+
+      if (!data || !data.length) {
+        data = [
+          { GroupCode: "1", GroupName: "CHEMICALS" },
+          { GroupCode: "25", GroupName: "CAT LITTER" },
+          { GroupCode: "29", GroupName: "FARM & GARDEN" },
+          { GroupCode: "6", GroupName: "FEEDS" },
+          { GroupCode: "2", GroupName: "FERTILIZERS" },
+          { GroupCode: "30", GroupName: "LIVESTOCK VETERINARY" },
+          { GroupCode: "19", GroupName: "PET FOOD" },
+          { GroupCode: "14", GroupName: "SEEDS" }
+        ];
+      }
 
       GridProdGroup.innerHTML = data.map((item, idx) => `
         <button
@@ -569,10 +595,18 @@
         <div class="h-6 w-20 bg-slate-100 rounded-lg animate-pulse flex-shrink-0"></div>
       `;
 
+      let data = null;
       const res = await fetchModelData("LoadProductCategory.php", { GroupCode: groupCode });
-      const data = res?.data || [];
+      if (res && res.data && res.data.length) {
+        data = res.data;
+      } else {
+        const cat = await getLocalCatalog();
+        if (cat && cat.categories && cat.categories[String(groupCode)]) {
+          data = cat.categories[String(groupCode)];
+        }
+      }
 
-      if (!data.length) {
+      if (!data || !data.length) {
         GridProdCategory.innerHTML = `<span class="text-xs text-slate-400 py-1">All items in this group</span>`;
         SelectedCategoryCode = "";
         LoadProducts();
@@ -631,8 +665,9 @@
         if (append) loadMoreBtn.textContent = "Loading Items...";
       }
 
-      const search = document.getElementById("searchInput")?.value || "";
+      const search = (document.getElementById("searchInput")?.value || "").toLowerCase().trim();
 
+      let data = null;
       const res = await fetchModelData("LoadProducts.php", {
         GroupCode: SelectedGroupCode,
         CategoryCode: SelectedCategoryCode,
@@ -641,7 +676,38 @@
         search
       });
 
-      const data = res?.data || [];
+      if (res && res.data && res.data.length) {
+        data = res.data;
+      } else {
+        const cat = await getLocalCatalog();
+        if (cat && cat.products) {
+          let pool = [];
+          const g = String(SelectedGroupCode);
+          const c = String(SelectedCategoryCode);
+
+          if (c && cat.products[`${g}_${c}`]) {
+            pool = cat.products[`${g}_${c}`];
+          } else {
+            Object.keys(cat.products).forEach(key => {
+              if (key.startsWith(`${g}_`)) {
+                pool = pool.concat(cat.products[key]);
+              }
+            });
+          }
+
+          if (search) {
+            pool = pool.filter(p => 
+              (p.ProductName && p.ProductName.toLowerCase().includes(search)) ||
+              (p.ProductCode && p.ProductCode.toLowerCase().includes(search))
+            );
+          }
+
+          const start = (page - 1) * limit;
+          data = pool.slice(start, start + limit);
+        }
+      }
+
+      if (!data) data = [];
 
       if (!append) productGrid.innerHTML = "";
 
