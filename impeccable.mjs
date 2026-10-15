@@ -16,19 +16,23 @@ const args = process.argv.slice(2);
 const command = args[0] || 'context';
 const restArgs = args.slice(1);
 
-const scriptMap = {
-  context: '.gemini/skills/impeccable/scripts/context.mjs',
-  detect: '.gemini/skills/impeccable/scripts/detect.mjs',
-  doctor: '.gemini/skills/impeccable/scripts/doctor.mjs',
-  hook: '.gemini/skills/impeccable/scripts/hook.mjs',
-  pin: '.gemini/skills/impeccable/scripts/pin.mjs'
-};
+const candidateBases = [
+  path.join(__dirname, '.agents', 'skills', 'impeccable', 'scripts'),
+  path.join(__dirname, '.claude', 'skills', 'impeccable', 'scripts'),
+  path.join(__dirname, '.gemini', 'skills', 'impeccable', 'scripts'),
+];
 
-const scriptRelPath = scriptMap[command] || `.gemini/skills/impeccable/scripts/${command}.mjs`;
-const scriptFullPath = path.resolve(__dirname, scriptRelPath);
+const scriptsDir = candidateBases.find(p => fs.existsSync(p));
+
+if (!scriptsDir) {
+  console.error('Error: Impeccable scripts directory not found in .agents, .claude, or .gemini');
+  process.exit(1);
+}
+
+const scriptFullPath = path.join(scriptsDir, `${command}.mjs`);
 
 if (!fs.existsSync(scriptFullPath)) {
-  console.error(`Error: Unknown command "${command}". Available commands: ${Object.keys(scriptMap).join(', ')}`);
+  console.error(`Error: Script "${command}.mjs" not found at ${scriptFullPath}. Available scripts: context, detect, doctor, hook, pin.`);
   process.exit(1);
 }
 

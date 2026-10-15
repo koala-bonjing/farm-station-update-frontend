@@ -36,13 +36,17 @@ For the full rule list per category (all 119 UX guidelines with rationale), read
 
 ## Running the search tool
 
-The search script lives inside this skill's own directory, not the project directory. Always invoke it by its full path — do not assume a particular working directory:
+Invoke via the workspace root convenience runner `uipro.py` or the direct script path:
 
 ```bash
-python "${CLAUDE_PLUGIN_ROOT}/.claude/skills/ui-ux-pro-max/scripts/search.py" "<query>" --domain <domain>
+# Workspace convenience runner (recommended):
+python uipro.py "<query>" --domain <domain>
+
+# Or direct invocation:
+python .gemini/skills/ui-ux-pro-max/scripts/search.py "<query>" --domain <domain>
 ```
 
-If `python` is not found, try `python3`, then `py -3`. Requires Python 3.x, no external dependencies (see README for install instructions if Python is missing).
+If `python` is not found, try `python3`, then `py -3`. Requires Python 3.x, no external dependencies.
 
 ## Workflow
 
