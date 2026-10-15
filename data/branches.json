@@ -34,14 +34,18 @@
   },
   {
     "id": "alb-04",
-    "name": "FarmStation Polangui Highway",
+    "name": "FarmStation Agri-vet Polangui",
     "province": "Albay",
     "municipality": "Polangui",
     "address": "Maharlika Highway, Centro Occidental, Polangui, Albay",
     "hours": "Mon-Sat: 7:00 AM - 5:30 PM",
     "phone": "+63 917 123 4570",
-    "services": ["Rice & Corn Seeds", "Commercial Fertilizers", "Swine Feeds"],
-    "mapQuery": "FarmStation+Agrivet+Polangui+Albay"
+    "services": ["Rice & Corn Seeds", "Commercial Fertilizers", "Swine Feeds", "Veterinary Care"],
+    "mapQuery": "FarmStation+Agri-vet+Polangui+Albay",
+    "image": "assets/branches/polangui.jpg",
+    "rating": "5.0",
+    "reviewsCount": 4,
+    "verifiedPhoto": true
   },
   {
     "id": "alb-05",
