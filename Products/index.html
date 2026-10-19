@@ -3,17 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Products & Agricultural Supplies | FarmStation Agrivet</title>
-  <meta name="description" content="Browse FarmStation's comprehensive agricultural and veterinary product catalog—crop protection, commercial fertilizers, seeds, feeds, veterinary medicine, and farm tools." />
-  
-  <!-- Favicon -->
+  <title>Products &amp; Agricultural Supplies Catalog | FarmStation Agrivet</title>
+  <meta name="description" content="Browse FarmStation's 815+ verified agricultural and veterinary supply catalog—crop protection, commercial fertilizers, hybrid seeds, livestock feeds, veterinary medicines, and farm tools." />
+
+  <!-- Favicon / Site Icon -->
   <link rel="icon" type="image/png" href="../assets/logo/favicon.png" />
-  
-  <!-- Fonts: Outfit (Display & Headings) + Work Sans (Clean Humanist Body) -->
+  <link rel="apple-touch-icon" href="../assets/logo/favicon.png" />
+  <link rel="preconnect" href="https://portal.farmstation.ph" crossorigin />
+
+  <!-- Typography: Bricolage Grotesque (Display) + Public Sans (Editorial UI) + JetBrains Mono (Technical SKU) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -22,63 +24,119 @@
         extend: {
           colors: {
             brand: {
-              50: '#eff6ff',
-              100: '#dbeafe',
-              500: '#1d4ed8',
-              800: '#1e40af',
-              900: '#0b1d40',
-              deep: '#0a1936',
+              50: '#EFF6FF',
+              100: '#DBEAFE',
+              500: '#1D4ED8',
+              800: '#1E40AF',
+              900: '#0B1D40',
+              deep: '#0A1936',
               navy: '#000080',
+              surface: '#0F2758',
+              card: '#122D65',
+            },
+            canvas: {
+              DEFAULT: '#0A1936',
+              stone: '#07132B',
+              linen: '#0D2044',
+            },
+            canopy: {
+              DEFAULT: '#0A1936',
+              deep: '#061024',
+              muted: '#122D65',
             },
             agri: {
-              50: '#f0fdf4',
-              100: '#dcfce7',
-              500: '#22c55e',
-              600: '#16a34a',
-              700: '#15803d',
+              50: '#0B2918',
+              100: '#134E2D',
+              400: '#4ADE80',
+              500: '#22C55E',
+              600: '#16A34A',
+              700: '#15803D',
               800: '#166534',
-              900: '#14532d',
+              900: '#14532D',
             },
             harvest: {
-              400: '#fbbf24',
-              500: '#f59e0b',
-              600: '#d97706',
-              700: '#b45309',
+              300: '#FDE68A',
+              400: '#FBBF24',
+              500: '#F59E0B',
+              600: '#D97706',
+              700: '#B45309',
+            },
+            ink: {
+              DEFAULT: '#F8FAFC',
+              secondary: '#CBD5E1',
+              muted: '#94A3B8',
             }
           },
           fontFamily: {
-            sans: ['"Work Sans"', 'sans-serif'],
-            display: ['"Outfit"', 'sans-serif'],
-          },
-          boxShadow: {
-            'subtle': '0 2px 10px rgba(10, 25, 54, 0.04)',
-            'card': '0 10px 30px -5px rgba(10, 25, 54, 0.07)',
-            'card-hover': '0 20px 40px -10px rgba(10, 25, 54, 0.15)',
+            sans: ['"Public Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            display: ['"Bricolage Grotesque"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
           }
         }
       }
     }
   </script>
 
-  <!-- Axios for API compatibility -->
+  <!-- Axios for API & JSON Catalog -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+  <!-- Official GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+
   <style>
-    /* Custom scrollbar & utilities */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 6px;
+    :root {
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      --ease-in: cubic-bezier(0.64, 0, 0.78, 0);
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+      --duration-fast: 150ms;
+      --duration-normal: 250ms;
+
+      --surface-canvas: #0A1936;
+      --surface-elevated: #07132B;
+      --surface-card: #0F2758;
+
+      --shadow-card:
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 4px 16px -2px rgba(0, 0, 0, 0.4);
+      --shadow-card-hover:
+        0 0 0 1px rgba(255, 255, 255, 0.18),
+        0 8px 24px -4px rgba(0, 0, 0, 0.5),
+        0 16px 32px -8px rgba(0, 0, 0, 0.6);
+      --shadow-frame:
+        0 0 0 1px rgba(255, 255, 255, 0.12),
+        0 12px 32px -8px rgba(0, 0, 0, 0.5);
     }
-    ::-webkit-scrollbar-track {
-      background: #f1f5f9;
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
     }
-    ::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 4px;
+
+    body {
+      background-color: var(--surface-canvas);
+      color: #F8FAFC;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      -webkit-font-smoothing: antialiased;
     }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
+
+    h1, h2, h3 {
+      text-wrap: balance;
+      letter-spacing: -0.025em;
     }
+
+    p {
+      text-wrap: pretty;
+    }
+
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+
     .scrollbar-hide::-webkit-scrollbar {
       display: none;
     }
@@ -86,42 +144,152 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
-    .glass-nav {
+
+    .media-outline-light {
+      outline: 1px solid rgba(255, 255, 255, 0.1);
+      outline-offset: -1px;
+    }
+
+    .media-outline-dark {
+      outline: 1px solid rgba(255, 255, 255, 0.14);
+      outline-offset: -1px;
+    }
+
+    .surface-card {
+      background: var(--surface-card);
+      box-shadow: var(--shadow-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition:
+        transform var(--duration-normal) var(--ease-out),
+        box-shadow var(--duration-normal) var(--ease-out),
+        background-color var(--duration-fast) var(--ease-out),
+        border-color var(--duration-fast) var(--ease-out);
+    }
+    .surface-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-card-hover);
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    .surface-frame {
+      box-shadow: var(--shadow-frame);
+    }
+
+    .btn-press {
+      transition:
+        transform var(--duration-fast) var(--ease-out),
+        background-color var(--duration-fast) var(--ease-out),
+        color var(--duration-fast) var(--ease-out),
+        box-shadow var(--duration-fast) var(--ease-out);
+    }
+    .btn-press:active {
+      transform: scale(0.96);
+    }
+
+    .canopy-nav {
       background: rgba(10, 25, 54, 0.95);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    /* Transitions.dev #16: Sliding Tab Pill Indicator (.t-tabs) */
+    .t-tabs-track {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .t-tabs-pill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      border-radius: 9999px;
+      background-color: #143372;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      pointer-events: none;
+      z-index: 0;
+      transition:
+        transform 260ms var(--ease-out),
+        width 260ms var(--ease-out),
+        opacity 150ms var(--ease-out);
+      opacity: 0;
+    }
+    .group-tab {
+      position: relative;
+      z-index: 1;
+      transition: color 180ms var(--ease-out);
+    }
+
+    /* Transitions.dev #06: Asymmetric Quick View Modal (.t-modal) */
+    .t-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      background: rgba(4, 11, 28, 0.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--duration-fast) var(--ease-in);
+    }
+    .t-modal-backdrop.is-open {
+      opacity: 1;
+      pointer-events: auto;
+      transition: opacity var(--duration-normal) var(--ease-out);
+    }
+    .t-modal-dialog {
+      transform: scale(0.96) translateY(8px);
+      opacity: 0;
+      transition:
+        transform var(--duration-fast) var(--ease-in),
+        opacity var(--duration-fast) var(--ease-in);
+    }
+    .t-modal-backdrop.is-open .t-modal-dialog {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+      transition:
+        transform var(--duration-normal) var(--ease-out),
+        opacity var(--duration-normal) var(--ease-out);
     }
   </style>
 </head>
 
-<body class="bg-[#F8FAF9] text-slate-800 font-sans antialiased selection:bg-harvest-400 selection:text-brand-deep min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col selection:bg-harvest-300 selection:text-canopy-deep">
+  <!--
+    DESIGN DIRECTION — FarmStation Agrivet (Products.html)
+    1. Brand & Aesthetic: Bicol Field Ledger & Technical Supply Index — warm limestone (#FAF7F2), deep canopy green (#0F291E), botanical field green (#166534), and harvest amber (#B45309).
+    2. Typography: Bricolage Grotesque (headings, -0.025em tracking) + Public Sans (catalog UI) + JetBrains Mono (SKU codes, item counts, tabular-nums).
+    3. Layout & Anti-Slop Craft Floor: Zero eyebrow/kicker badges, zero unicode emoji icons, zero image hover scaling, concentric border radii (outer 20px - p-2 8px = inner 12px), and 1px oklch(0 0 0 / 0.08) image outlines.
+    4. Motion & Transitions: Transitions.dev .t-tabs sliding active group pill + .t-modal asymmetric Quick View dialog (250ms open / 150ms close from scale 0.96).
+    5. Image & Catalog Speed: Pre-cached local catalog.json with 0ms in-memory tab/category switching and lightweight local default-product.jpg (~18 KB vs 939 KB remote default.png).
+  -->
 
   <!-- =========================================================================
-       TOP ANNOUNCEMENT & UTILITY BAR
+       TOP TRADE LEDGER BAR
   ========================================================================= -->
-  <aside class="bg-brand-deep text-slate-300 text-xs border-b border-white/10 hidden md:block">
+  <aside class="bg-canopy-deep text-canvas-linen/80 text-xs border-b border-white/10 hidden md:block">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-between">
       <div class="flex items-center gap-6">
-        <span class="flex items-center gap-1.5 font-medium text-slate-200">
-          <span class="inline-block w-2 h-2 rounded-full bg-agri-500 animate-pulse"></span>
-          Bicol's Trusted Agri-Vet Since 1982
+        <span class="font-mono text-[11px] tracking-tight text-canvas-linen/90 tabular-nums">
+          CATALOG INDEX &middot; 815+ VERIFIED SKUS
         </span>
-        <span class="text-white/20">|</span>
-        <span class="text-slate-300">
-          Official Product Catalog & Branch Inventory Inquiries
+        <span class="text-white/15">|</span>
+        <span class="text-canvas-linen/80">
+          Available across <strong class="text-harvest-300 font-mono font-semibold tabular-nums" id="TopBarBranchCount">52+</strong> Bicol retail branches
         </span>
       </div>
 
-      <div class="flex items-center gap-4">
-        <span class="text-slate-400">Social Accounts:</span>
-        <div class="flex items-center gap-2">
-          <button id="BtnFB" aria-label="Official Facebook" class="w-6 h-6 rounded-full bg-white/10 hover:bg-blue-600 text-white flex items-center justify-center transition-colors">
+      <div class="flex items-center gap-3">
+        <span class="text-canvas-linen/60 text-[11px]">Official Channels</span>
+        <div class="flex items-center gap-1.5">
+          <button id="BtnFB" aria-label="Official Facebook" class="btn-press w-6 h-6 rounded-md bg-white/10 hover:bg-white/20 text-white flex items-center justify-center">
             <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
           </button>
-          <button id="BtnYT" aria-label="Official YouTube" class="w-6 h-6 rounded-full bg-white/10 hover:bg-red-600 text-white flex items-center justify-center transition-colors">
+          <button id="BtnYT" aria-label="Official YouTube" class="btn-press w-6 h-6 rounded-md bg-white/10 hover:bg-white/20 text-white flex items-center justify-center">
             <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
           </button>
-          <button id="BtnTikTok" aria-label="Official TikTok" class="w-6 h-6 rounded-full bg-white/10 hover:bg-slate-700 text-white flex items-center justify-center transition-colors">
+          <button id="BtnTikTok" aria-label="Official TikTok" class="btn-press w-6 h-6 rounded-md bg-white/10 hover:bg-white/20 text-white flex items-center justify-center">
             <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-1.01v8.86c-.03 2.19-.85 4.38-2.39 5.95-1.61 1.66-3.95 2.56-6.28 2.37-2.67-.18-5.11-1.74-6.3-4.14-1.29-2.52-1.08-5.74.55-8.03 1.57-2.22 4.22-3.46 6.94-3.17.02 1.39-.01 2.78 0 4.17-1.39-.19-2.86.34-3.71 1.45-.88 1.12-.96 2.72-.21 3.93.74 1.19 2.18 1.84 3.57 1.58 1.34-.23 2.39-1.38 2.53-2.73.07-2.61.04-5.23.04-7.85V.02z"/></svg>
           </button>
         </div>
@@ -130,274 +298,332 @@
   </aside>
 
   <!-- =========================================================================
-       MAIN NAVIGATION BAR (Sticky Glassmorphic)
+       MAIN NAVIGATION BAR
   ========================================================================= -->
-  <header class="sticky top-0 z-50 glass-nav border-b border-white/10" id="mainHeader">
+  <header class="sticky top-0 z-50 canopy-nav border-b border-white/10" id="mainHeader">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-20">
+      <div class="flex items-center justify-between h-18 py-3.5">
 
-        <!-- Logo -->
-        <a href="../index.html" class="flex items-center gap-3 group focus:outline-none">
-          <img src="https://portal.farmstation.ph/CDN/Logo/FsLogoW.png" alt="FarmStation Agrivet" class="h-9 sm:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
+        <a id="navLogoLink" href="index.html" class="flex items-center gap-3 focus:outline-none">
+          <img
+            src="https://portal.farmstation.ph/CDN/Logo/FsLogoW.png"
+            alt="FarmStation Agrivet"
+            width="180"
+            height="40"
+            fetchpriority="high"
+            decoding="async"
+            class="h-9 sm:h-10 w-auto object-contain"
+          />
         </a>
 
-        <!-- Desktop Navigation Links -->
-        <nav class="hidden lg:flex items-center gap-8">
-          <a id="BtnHome1" href="../index.html" class="text-slate-300 hover:text-white font-display font-semibold text-sm tracking-wide transition-colors relative py-1 hover:after:absolute hover:after:bottom-0 hover:after:left-0 hover:after:w-full hover:after:h-0.5 hover:after:bg-harvest-400/60">
+        <nav class="hidden lg:flex items-center gap-7" aria-label="Primary Navigation">
+          <a id="BtnHome1" href="javascript:void(0)" class="text-canvas-linen/80 hover:text-white font-medium text-sm transition-colors py-1">
             Home
           </a>
-          <a id="BtnProducts1" href="./" class="text-white hover:text-harvest-400 font-display font-semibold text-sm tracking-wide transition-colors relative py-1 after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-harvest-400 after:rounded-full">
-            Products & Supplies
+          <a id="BtnProducts1" href="javascript:void(0)" class="text-white font-medium text-sm relative py-1 after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-harvest-400">
+            Product Catalog
           </a>
-          <a href="../Branches/" class="text-slate-300 hover:text-white font-display font-semibold text-sm tracking-wide transition-colors relative py-1 hover:after:absolute hover:after:bottom-0 hover:after:left-0 hover:after:w-full hover:after:h-0.5 hover:after:bg-harvest-400/60">
-            Branch Locator
+          <a id="navBranchesDesktop" href="Branches.html" class="text-canvas-linen/80 hover:text-white font-medium text-sm transition-colors py-1">
+            Branch Directory
           </a>
-          <a href="../index.html#promos-section" class="text-slate-300 hover:text-white font-display font-semibold text-sm tracking-wide transition-colors relative py-1 hover:after:absolute hover:after:bottom-0 hover:after:left-0 hover:after:w-full hover:after:h-0.5 hover:after:bg-harvest-400/60">
-            Promos & Events
+          <a id="navPromosDesktop" href="index.html#promos-section" class="text-canvas-linen/80 hover:text-white font-medium text-sm transition-colors py-1">
+            Seasonal Advisories
           </a>
-          <a href="../index.html#story-section" class="text-slate-300 hover:text-white font-display font-semibold text-sm tracking-wide transition-colors relative py-1 hover:after:absolute hover:after:bottom-0 hover:after:left-0 hover:after:w-full hover:after:h-0.5 hover:after:bg-harvest-400/60">
-            Our Story
+          <a id="navStoryDesktop" href="index.html#story-section" class="text-canvas-linen/80 hover:text-white font-medium text-sm transition-colors py-1">
+            Company Ledger
           </a>
-          <a id="BtnCareers1" href="javascript:void(0)" class="text-slate-300 hover:text-white font-display font-semibold text-sm tracking-wide transition-colors relative py-1 hover:after:absolute hover:after:bottom-0 hover:after:left-0 hover:after:w-full hover:after:h-0.5 hover:after:bg-harvest-400/60">
+          <a id="BtnCareers1" href="javascript:void(0)" class="text-canvas-linen/80 hover:text-white font-medium text-sm transition-colors py-1">
             Careers
           </a>
         </nav>
 
-        <!-- Right Action Button -->
-        <div class="hidden lg:flex items-center gap-4">
-          <a href="../Branches/" class="inline-flex items-center gap-2 bg-harvest-500 hover:bg-harvest-600 text-brand-deep font-display font-bold text-xs uppercase tracking-wider px-5 py-2.5 rounded-full shadow-lg shadow-harvest-500/20 transition-all active:scale-95">
+        <div class="hidden lg:flex items-center gap-3">
+          <a id="navFindStoreCta" href="Branches.html" class="btn-press inline-flex items-center gap-2 bg-harvest-400 hover:bg-harvest-300 text-canopy-deep font-display font-bold text-xs tracking-wide pl-5 pr-4 py-2.5 rounded-full">
+            <span>Find Nearest Store</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-            Find a Branch
           </a>
         </div>
 
-        <!-- Mobile Menu Hamburger Button -->
         <div class="lg:hidden flex items-center">
-          <button id="mobileMenuToggle" aria-label="Toggle navigation menu" class="p-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 focus:outline-none transition-colors">
-            <svg id="hamburgerIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-            <svg id="closeIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          <button id="mobileMenuToggle" aria-label="Toggle navigation menu" class="btn-press w-10 h-10 rounded-xl text-canvas-linen hover:text-white hover:bg-white/10 flex items-center justify-center focus:outline-none">
+            <svg id="hamburgerIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <svg id="closeIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M6 18L18 6M6 6l12 12"/></svg>
           </button>
         </div>
 
       </div>
     </div>
 
-    <!-- Mobile Drawer Navigation -->
-    <div id="mobileMenu" class="hidden lg:hidden border-t border-white/10 bg-brand-deep/95 backdrop-blur-xl px-4 pt-4 pb-6 space-y-3">
-      <a id="BtnHome2" href="../index.html" class="block px-4 py-2.5 rounded-xl font-display font-semibold text-sm text-slate-200 hover:bg-white/10">
+    <div id="mobileMenu" class="hidden lg:hidden border-t border-white/10 bg-canopy-deep px-4 pt-3 pb-6 space-y-1.5">
+      <a id="BtnHome2" href="javascript:void(0)" class="block px-4 py-2.5 rounded-xl font-medium text-sm text-canvas-linen hover:bg-white/10">
         Home
       </a>
-      <a id="BtnProducts2" href="./" class="block px-4 py-2.5 rounded-xl font-display font-semibold text-sm text-harvest-400 bg-white/5">
-        Products & Supplies
+      <a id="BtnProducts2" href="javascript:void(0)" class="block px-4 py-2.5 rounded-xl font-medium text-sm text-harvest-300 bg-white/5">
+        Product Catalog
       </a>
-      <a href="../Branches/" class="block px-4 py-2.5 rounded-xl font-display font-semibold text-sm text-slate-200 hover:bg-white/10">
-        Branch Locator
+      <a id="navBranchesMobile" href="Branches.html" class="block px-4 py-2.5 rounded-xl font-medium text-sm text-canvas-linen hover:bg-white/10">
+        Branch Directory
       </a>
-      <a href="../index.html#promos-section" class="block px-4 py-2.5 rounded-xl font-display font-semibold text-sm text-slate-200 hover:bg-white/10">
-        Promos & Events
+      <a id="navPromosMobile" href="index.html#promos-section" class="block px-4 py-2.5 rounded-xl font-medium text-sm text-canvas-linen hover:bg-white/10">
+        Seasonal Advisories
       </a>
-      <a href="../index.html#story-section" class="block px-4 py-2.5 rounded-xl font-display font-semibold text-sm text-slate-200 hover:bg-white/10">
-        Our Story
+      <a id="navStoryMobile" href="index.html#story-section" class="block px-4 py-2.5 rounded-xl font-medium text-sm text-canvas-linen hover:bg-white/10">
+        Company Ledger
       </a>
-      <a id="BtnCareers2" href="javascript:void(0)" class="block px-4 py-2.5 rounded-xl font-display font-semibold text-sm text-slate-200 hover:bg-white/10">
-        Careers & Openings
+      <a id="BtnCareers2" href="javascript:void(0)" class="block px-4 py-2.5 rounded-xl font-medium text-sm text-canvas-linen hover:bg-white/10">
+        Careers &amp; Openings
       </a>
     </div>
   </header>
 
   <!-- =========================================================================
-       CATALOG HERO & LIVE SEARCH HEADER
+       CATALOG HEADER & INSTANT SEARCH BAR (Zero Eyebrow Slop)
   ========================================================================= -->
-  <section class="bg-gradient-to-b from-brand-deep to-slate-900 text-white pt-12 pb-14 px-4 sm:px-6 lg:px-8 border-b border-white/10">
-    <div class="max-w-4xl mx-auto text-center space-y-4">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-agri-500/10 border border-agri-500/30 text-agri-300 text-xs font-display font-bold uppercase tracking-wider">
-        🌾 One-Stop Agri-Vet Catalog
+  <section class="bg-canopy text-white pt-10 pb-10 px-4 sm:px-6 lg:px-8 border-b border-white/10">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+      <div class="lg:col-span-7 space-y-2.5">
+        <h1 class="text-3xl sm:text-4xl lg:text-[42px] font-display font-extrabold text-white leading-tight">
+          Agricultural &amp; Veterinary Supply Catalog
+        </h1>
+        <p class="text-canvas-linen/80 text-sm sm:text-base max-w-[60ch]">
+          Filter by supply division, product category, or SKU keyword. All items are stocked across our regional Bicol branches.
+        </p>
       </div>
 
-      <h1 class="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-white tracking-tight">
-        Explore Products & Supplies
-      </h1>
-
-      <p class="text-slate-300 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-        Browse authentic agricultural inputs, livestock feeds, veterinary medicines, and farming equipment available across all FarmStation branches.
-      </p>
-
-      <!-- Live Search Bar -->
-      <div class="pt-4 max-w-xl mx-auto">
+      <!-- Instant Search Box -->
+      <div class="lg:col-span-5">
         <div class="relative flex items-center">
           <span class="absolute left-4 text-slate-400 pointer-events-none">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
           </span>
-          <input 
-            id="searchInput" 
-            oninput="filterProducts()" 
+          <input
+            id="searchInput"
+            oninput="filterProducts()"
             autocomplete="off"
             type="text"
-            class="w-full rounded-full pl-12 pr-12 py-3.5 bg-white text-slate-900 placeholder-slate-400 text-sm font-medium shadow-xl border-2 border-transparent focus:border-harvest-400 focus:outline-none transition-all"
-            placeholder="Search products by brand, chemical, or item name..." 
+            aria-label="Search products by name or code"
+            class="w-full rounded-full pl-11 pr-20 py-3.5 bg-[#0F2758] text-white placeholder-slate-400 text-sm font-medium border border-white/15 shadow-lg focus:outline-none focus:ring-2 focus:ring-harvest-400"
+            placeholder="Search feeds, fertilizers, vaccines, seeds..."
           />
-          <button onclick="resetFilter()" id="clearSearchBtn" class="absolute right-4 text-slate-400 hover:text-slate-600 hidden text-xs font-bold uppercase tracking-wider bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded-full">
+          <button onclick="resetFilter()" id="clearSearchBtn" class="btn-press absolute right-3 text-slate-300 hover:text-white hidden text-xs font-display font-bold bg-white/10 px-3 py-1 rounded-full">
             Clear
           </button>
         </div>
       </div>
-
     </div>
   </section>
 
   <!-- =========================================================================
-       CATEGORY & GROUP FILTER NAVIGATION
+       STICKY GROUP & SUBCATEGORY FILTER BAR (.t-tabs Sliding Pill)
   ========================================================================= -->
-  <section class="sticky top-20 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-subtle">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-      
-      <!-- Primary Group Tabs (Injected via Products.js) -->
-      <div class="relative">
-        <div id="GridProdGroup" class="flex gap-2 overflow-x-auto scrollbar-hide py-1">
-          <!-- Skeleton Pills -->
-          <div class="h-9 w-28 bg-slate-100 rounded-full animate-pulse flex-shrink-0"></div>
-          <div class="h-9 w-32 bg-slate-100 rounded-full animate-pulse flex-shrink-0"></div>
-          <div class="h-9 w-24 bg-slate-100 rounded-full animate-pulse flex-shrink-0"></div>
-          <div class="h-9 w-36 bg-slate-100 rounded-full animate-pulse flex-shrink-0"></div>
+  <section class="sticky top-[68px] z-40 bg-[#07132B]/95 backdrop-blur-md border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 space-y-2.5">
+
+      <!-- Primary Product Groups with Sliding Pill Indicator -->
+      <div class="overflow-x-auto scrollbar-hide">
+        <div class="t-tabs-track py-0.5" id="GridProdGroupWrapper">
+          <div id="groupTabPill" class="t-tabs-pill"></div>
+          <div class="flex items-center gap-1.5" id="GridProdGroup"></div>
         </div>
       </div>
 
-      <!-- Sub-Category Filter Chips -->
-      <div class="pt-2 border-t border-slate-100 mt-2">
-        <div id="GridProdCategory" class="flex items-center gap-1.5 overflow-x-auto scrollbar-hide py-1">
-          <!-- Skeletons -->
-          <div class="h-7 w-20 bg-slate-100 rounded-lg animate-pulse flex-shrink-0"></div>
-          <div class="h-7 w-24 bg-slate-100 rounded-lg animate-pulse flex-shrink-0"></div>
-        </div>
-      </div>
+      <!-- Subcategories Strip -->
+      <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-hide pt-2 border-t border-white/10" id="GridProdCategory"></div>
 
     </div>
   </section>
 
   <!-- =========================================================================
-       PRODUCT GRID & LISTINGS
+       PRODUCT CATALOG GRID
   ========================================================================= -->
   <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
-    
-    <!-- Active Category Banner & Stats -->
-    <div class="flex items-center justify-between mb-6 pb-3 border-b border-slate-200/60">
-      <div class="text-xs sm:text-sm text-slate-500">
-        Showing items for: <strong class="text-brand-deep font-display" id="activeCategoryTitle">All Products</strong>
+
+    <div class="flex items-center justify-between mb-6 pb-3 border-b border-white/10">
+      <div>
+        <h2 class="text-lg sm:text-xl font-display font-extrabold text-white" id="activeCategoryTitle">
+          Agricultural Chemicals
+        </h2>
+        <p class="text-xs text-slate-400 mt-0.5">
+          Showing <span id="visibleProductCount" class="font-mono font-semibold text-harvest-400 tabular-nums">0</span> items &middot; Click any item for specifications
+        </p>
       </div>
-      <div class="text-xs text-slate-400 font-medium">
-        Click any item to view details
-      </div>
+      <span class="font-mono text-[11px] font-semibold text-agri-400 bg-agri-500/15 border border-agri-500/30 px-2.5 py-1 rounded-md">
+        IN-STORE SUPPLY
+      </span>
     </div>
 
     <!-- Product Grid -->
-    <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 lg:gap-5">
-      <!-- Injected dynamically -->
-    </div>
+    <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-5"></div>
 
-    <!-- Load More Button -->
-    <div class="flex justify-center mt-12 mb-6">
-      <button 
-        id="loadMoreBtn" 
-        class="inline-flex items-center gap-2 bg-brand-deep hover:bg-brand-800 text-white font-display font-semibold text-xs uppercase tracking-wider px-8 py-3.5 rounded-full shadow-md transition-all active:scale-95 disabled:opacity-50"
-        onclick="LoadMoreProducts()">
-        Load More Items
+    <!-- Empty State (Stroke SVG, Zero Emojis) -->
+    <div id="emptyState" class="hidden py-16 text-center">
+      <div class="w-12 h-12 rounded-2xl bg-white/10 text-slate-400 flex items-center justify-center mx-auto mb-3">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      </div>
+      <h3 class="font-display font-bold text-lg text-white">No matching catalog items</h3>
+      <p class="text-slate-400 text-xs sm:text-sm mt-1 max-w-sm mx-auto">
+        Try clearing your search keyword or selecting another product division above.
+      </p>
+      <button onclick="resetFilter()" class="btn-press mt-4 inline-flex items-center gap-2 bg-harvest-400 hover:bg-harvest-300 text-canopy-deep font-display font-bold text-xs px-5 py-2.5 rounded-full">
+        Reset Filter
       </button>
     </div>
 
-    <!-- Empty State -->
-    <div id="emptyState" class="hidden py-16 text-center">
-      <div class="w-16 h-16 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-4 text-2xl">
-        🔍
-      </div>
-      <h3 class="font-display font-bold text-lg text-brand-deep">No matching products found</h3>
-      <p class="text-slate-500 text-xs sm:text-sm mt-1 max-w-sm mx-auto">
-        We couldn't find items matching your search or filter. Try a broader term or reset your filters.
-      </p>
-      <button onclick="resetFilter()" class="mt-4 inline-flex items-center gap-2 bg-brand-deep hover:bg-brand-800 text-white font-display font-semibold text-xs uppercase tracking-wider px-6 py-2.5 rounded-full shadow-sm">
-        Reset Search Filters
+    <!-- Load More Pagination -->
+    <div class="text-center mt-10">
+      <button
+        id="loadMoreBtn"
+        onclick="LoadMoreProducts()"
+        class="btn-press inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/15 font-display font-bold text-xs tracking-wide pl-6 pr-5 py-3.5 rounded-full"
+      >
+        <span>Load More Catalog Items</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
       </button>
     </div>
 
   </main>
 
   <!-- =========================================================================
-       PRODUCT QUICK VIEW MODAL
+       PRODUCT QUICK VIEW MODAL (Transitions.dev .t-modal)
   ========================================================================= -->
-  <div id="productModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
-    <div class="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden transform scale-95 transition-transform duration-300" id="modalBox">
-      
-      <!-- Close Button -->
-      <button onclick="closeProductModal()" aria-label="Close modal" class="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center font-bold text-sm transition">
-        ✕
-      </button>
+  <div id="productModal" class="t-modal-backdrop flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="modalProductName">
+    <div class="t-modal-dialog bg-[#0F2758] border border-white/15 rounded-[24px] p-2.5 max-w-2xl w-full surface-frame relative text-white">
+      <div class="rounded-[14px] bg-[#0F2758] border border-white/10 p-5 sm:p-7">
+        <button
+          id="closeProductModal"
+          aria-label="Close modal"
+          class="btn-press absolute top-5 right-5 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
 
-      <!-- Product Image Stage -->
-      <div class="bg-gradient-to-b from-slate-50 to-[#FAFBF9] p-8 flex items-center justify-center min-h-[260px] border-b border-slate-100">
-        <img id="modalProductImage" src="https://portal.farmstation.ph/CDN/FSPrcImage/default.png" alt="Product Image" class="max-h-[240px] max-w-full object-contain" />
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+          <div class="md:col-span-5 flex items-center justify-center bg-[#07132B] rounded-[12px] p-4 aspect-square media-outline-dark">
+            <img
+              id="modalProductImage"
+              src="assets/cache/default-product.jpg"
+              alt="Product Preview"
+              width="320"
+              height="320"
+              class="max-h-56 w-auto object-contain"
+            />
+          </div>
+
+          <div class="md:col-span-7 flex flex-col justify-between space-y-4">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-[11px] font-semibold text-agri-400 bg-agri-500/15 border border-agri-500/30 px-2.5 py-0.5 rounded">
+                  VERIFIED STOCK
+                </span>
+                <span id="modalProductSku" class="font-mono text-[11px] text-harvest-400 tabular-nums"></span>
+              </div>
+              <h2 id="modalProductName" class="text-xl sm:text-2xl font-display font-extrabold text-white mt-2 leading-snug">
+                Product Name
+              </h2>
+              <div id="modalProductDescription" class="mt-3 text-slate-300 text-xs sm:text-sm space-y-1.5 leading-relaxed max-h-48 overflow-y-auto pr-2">
+                Specifications available in store.
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-white/10 flex flex-wrap items-center gap-2.5">
+              <a id="modalBranchLink" href="Branches.html" class="btn-press flex-1 text-center bg-harvest-400 hover:bg-harvest-300 text-canopy-deep font-display font-bold text-xs py-3 px-4 rounded-xl">
+                Find Nearest Branch
+              </a>
+              <a href="https://www.facebook.com/farmstationofficial" target="_blank" rel="noopener noreferrer" class="btn-press flex-1 text-center bg-white/10 hover:bg-white/15 text-white border border-white/15 font-display font-bold text-xs py-3 px-4 rounded-xl">
+                Inquire on Facebook
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <!-- Product Details Content -->
-      <div class="p-6 space-y-4">
-        <div>
-          <span class="inline-block px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-agri-100 text-agri-800 mb-2">
-            Authentic FarmStation Inventory
-          </span>
-          <h3 id="modalProductName" class="font-display font-extrabold text-lg sm:text-xl text-brand-deep leading-snug"></h3>
-          <p id="modalProductCode" class="text-xs text-slate-400 font-mono mt-0.5"></p>
-        </div>
-
-        <div id="modalProductDescription" class="hidden text-xs sm:text-sm text-slate-600 leading-relaxed max-h-40 overflow-y-auto p-3 bg-slate-50 rounded-xl border border-slate-100">
-        </div>
-
-        <!-- In-store notice -->
-        <div class="pt-2 flex items-center justify-between text-xs text-slate-500 border-t border-slate-100">
-          <span>Available at FarmStation branches across Bicol</span>
-          <a href="../Branches/" class="text-brand-800 font-bold hover:underline">Find Nearest Branch →</a>
-        </div>
-      </div>
-
     </div>
   </div>
 
   <!-- =========================================================================
        ENTERPRISE FOOTER
   ========================================================================= -->
-  <footer class="bg-slate-900 text-slate-400 text-sm mt-auto">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+  <footer class="bg-canopy-deep text-canvas-linen/70 text-sm border-t border-white/10 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
       <div class="flex items-center gap-3">
-        <img src="https://portal.farmstation.ph/CDN/Logo/FsLogoW.png" alt="FarmStation Logo" class="h-7 w-auto object-contain" />
-        <span class="text-slate-500">|</span>
-        <span class="text-slate-400">&copy; <span id="year">2026</span> FarmStation Agrivet Inc. All rights reserved.</span>
+        <img src="https://portal.farmstation.ph/CDN/Logo/FsLogoW.png" alt="FarmStation Logo" width="140" height="32" loading="lazy" decoding="async" class="h-7 w-auto object-contain" />
+        <span class="text-white/20">|</span>
+        <span>&copy; <span id="year">2026</span> Farm Station Inc. All rights reserved.</span>
       </div>
       <div class="flex items-center gap-6">
-        <a href="../index.html" class="hover:text-white transition">Home</a>
-        <a href="../Branches/" class="hover:text-white transition">Branch Locator</a>
-        <a href="https://www.facebook.com/fscareers" target="_blank" class="hover:text-white transition">Careers</a>
+        <a id="footerHomeLink" href="index.html" class="hover:text-white transition-colors">Home</a>
+        <a id="footerBranchesLink" href="Branches.html" class="hover:text-white transition-colors">Branch Directory</a>
+        <a href="https://www.facebook.com/fscareers" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">Careers</a>
       </div>
     </div>
   </footer>
 
   <!-- =========================================================================
-       PRODUCT CONTROLLER LOGIC (100% Retained Process & Robust Fallback)
+       FAST IN-MEMORY CATALOG ENGINE (Works at both /Products.html & /Products/)
   ========================================================================= -->
   <script>
-    // State
+    // Automatically resolve relative paths whether served from /Products.html or /Products/index.html
+    const IS_SUBDIR = window.location.pathname.replace(/\\/g, "/").includes("/Products/");
+    const BASE_PREFIX = IS_SUBDIR ? "../" : "";
+    const LOCAL_DEFAULT_IMG = `${BASE_PREFIX}assets/cache/default-product.jpg`;
+    const CDN_DEFAULT_IMG = "https://portal.farmstation.ph/CDN/FSPrcImage/default.png";
+
     let SelectedGroupCode = "";
     let SelectedCategoryCode = "";
     let currentPage = 1;
-    let hasMore = true;
     let isLoading = false;
-    let searchTimeout;
+    let hasMore = true;
     const productDescriptions = {};
+    let searchTimeout;
+    let catalogCache = null;
+    let liveBackendAvailable = false;
 
-    document.addEventListener("DOMContentLoaded", () => {
+    const STATIC_GROUPS = [
+      { GroupCode: "3", GroupName: "AGRICULTURAL CHEMICALS" },
+      { GroupCode: "29", GroupName: "FARM & GARDEN" },
+      { GroupCode: "6", GroupName: "FEEDS" },
+      { GroupCode: "2", GroupName: "FERTILIZERS" },
+      { GroupCode: "30", GroupName: "LIVESTOCK VETERINARY" },
+      { GroupCode: "19", GroupName: "PET FOOD" },
+      { GroupCode: "14", GroupName: "SEEDS" }
+    ];
+
+    document.addEventListener("DOMContentLoaded", function () {
+      fixRelativeLinks();
       initNavigation();
-      LoadProductGroups();
-      SetupProductModal();
-      
+      initModalBindings();
+      initCatalogFast();
+
       const yearEl = document.getElementById("year");
       if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      window.addEventListener("resize", () => {
+        const activeTab = document.querySelector(".group-tab[data-active='true']");
+        if (activeTab) moveGroupPill(activeTab);
+      });
     });
+
+    function fixRelativeLinks() {
+      if (!IS_SUBDIR) return;
+      const map = {
+        navLogoLink: "../index.html",
+        navBranchesDesktop: "../Branches.html",
+        navPromosDesktop: "../index.html#promos-section",
+        navStoryDesktop: "../index.html#story-section",
+        navFindStoreCta: "../Branches.html",
+        navBranchesMobile: "../Branches.html",
+        navPromosMobile: "../index.html#promos-section",
+        navStoryMobile: "../index.html#story-section",
+        modalBranchLink: "../Branches.html",
+        footerHomeLink: "../index.html",
+        footerBranchesLink: "../Branches.html"
+      };
+      Object.keys(map).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.href = map[id];
+      });
+      const favicon = document.querySelector("link[rel='icon']");
+      if (favicon) favicon.href = "../assets/logo/favicon.png";
+    }
 
     function initNavigation() {
       const mobileToggle = document.getElementById("mobileMenuToggle");
@@ -415,7 +641,12 @@
 
       ["BtnHome1", "BtnHome2"].forEach(id => {
         const el = document.getElementById(id);
-        if (el) el.onclick = () => { window.location.href = "../index.html"; };
+        if (el) el.onclick = () => { window.location.href = `${BASE_PREFIX}index.html`; };
+      });
+
+      ["BtnProducts1", "BtnProducts2"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.onclick = () => { window.scrollTo({ top: 0, behavior: "smooth" }); };
       });
 
       ["BtnCareers1", "BtnCareers2"].forEach(id => {
@@ -439,53 +670,54 @@
       });
     }
 
-    // Modal Control
-    function SetupProductModal() {
-      const productGrid = document.getElementById("productGrid");
-      if (!productGrid) return;
+    function initModalBindings() {
+      const modal = document.getElementById("productModal");
+      const modalImage = document.getElementById("modalProductImage");
+      const modalName = document.getElementById("modalProductName");
+      const modalSku = document.getElementById("modalProductSku");
+      const modalDescription = document.getElementById("modalProductDescription");
+      const closeModal = document.getElementById("closeProductModal");
 
-      productGrid.addEventListener("click", e => {
+      document.getElementById("productGrid").addEventListener("click", e => {
         const card = e.target.closest(".product-card");
         if (!card) return;
 
-        document.getElementById("modalProductImage").src = card.dataset.image;
-        document.getElementById("modalProductName").textContent = card.dataset.name;
-        document.getElementById("modalProductCode").textContent = "Item Code: " + (card.dataset.productcode || "N/A");
+        const productCode = card.dataset.productcode;
+        modalImage.src = card.dataset.image || LOCAL_DEFAULT_IMG;
+        modalImage.onerror = function () {
+          this.onerror = function () { this.onerror = null; this.src = CDN_DEFAULT_IMG; };
+          this.src = LOCAL_DEFAULT_IMG;
+        };
+        modalName.textContent = card.dataset.name;
+        if (modalSku) modalSku.textContent = productCode ? `SKU #${productCode}` : "";
 
-        const description = productDescriptions[card.dataset.productcode] || "";
-        const descBox = document.getElementById("modalProductDescription");
-        if (descBox) {
-          descBox.innerHTML = description;
-          descBox.classList.toggle("hidden", !description.trim());
+        const rawDesc = productDescriptions[productCode] || "";
+        if (rawDesc.trim()) {
+          modalDescription.innerHTML = rawDesc
+            .split(/\r?\n/)
+            .filter(Boolean)
+            .map(line => `<p>${escapeHtml(line)}</p>`)
+            .join("");
+        } else {
+          modalDescription.innerHTML = "<p>Genuine quality agricultural and veterinary supply stocked at FarmStation branches across Bicol.</p>";
         }
 
-        openProductModal();
+        modal.classList.add("is-open");
       });
 
-      // Close on backdrop click
-      const modal = document.getElementById("productModal");
+      function hideModal() {
+        modal.classList.remove("is-open");
+      }
+
+      closeModal.addEventListener("click", hideModal);
       modal.addEventListener("click", e => {
-        if (e.target === modal) closeProductModal();
+        if (e.target === modal) hideModal();
+      });
+      document.addEventListener("keydown", e => {
+        if (e.key === "Escape") hideModal();
       });
     }
 
-    function openProductModal() {
-      const modal = document.getElementById("productModal");
-      const box = document.getElementById("modalBox");
-      modal.classList.remove("opacity-0", "pointer-events-none");
-      box.classList.remove("scale-95");
-      box.classList.add("scale-100");
-    }
-
-    function closeProductModal() {
-      const modal = document.getElementById("productModal");
-      const box = document.getElementById("modalBox");
-      modal.classList.add("opacity-0", "pointer-events-none");
-      box.classList.remove("scale-100");
-      box.classList.add("scale-95");
-    }
-
-    // Safe HTML Escape
     function escapeHtml(text) {
       return String(text ?? "").replace(/[&<>"']/g, c => ({
         "&": "&amp;",
@@ -496,71 +728,62 @@
       })[c]);
     }
 
-    // Smart Multi-Path Model Fetcher & Local Catalog Integration
-    let localCatalog = null;
-
     async function getLocalCatalog() {
-      if (localCatalog) return localCatalog;
-      const paths = ["../data/catalog.json", "data/catalog.json", "/data/catalog.json"];
+      if (catalogCache) return catalogCache;
+      const paths = [`${BASE_PREFIX}data/catalog.json`, "data/catalog.json", "../data/catalog.json", "/data/catalog.json"];
       for (const p of paths) {
         try {
-          const res = await axios.get(p, { timeout: 3000 });
+          const res = await axios.get(p, { timeout: 2500 });
           if (res.data && res.data.groups) {
-            localCatalog = res.data;
-            return localCatalog;
+            catalogCache = res.data;
+            return catalogCache;
           }
         } catch (e) {}
       }
       return null;
     }
 
-    async function fetchModelData(modelFile, params = {}) {
+    async function fetchModelData(endpoint, params = {}) {
+      if (!liveBackendAvailable) return null;
       try {
-        const res = await axios.get(`../Backend/model/${modelFile}`, { params, timeout: 2500 });
-        if (res.data && (res.data.data || res.data.length)) return res.data;
-      } catch (e) {}
-
-      try {
-        const res = await axios.get(`Backend/model/${modelFile}`, { params, timeout: 2500 });
-        if (res.data && (res.data.data || res.data.length)) return res.data;
-      } catch (e) {}
-
+        const res = await axios.get(`${BASE_PREFIX}Backend/model/${endpoint}`, { params, timeout: 1200 });
+        if (res.data && typeof res.data === "object" && Array.isArray(res.data.data)) {
+          return res.data;
+        }
+      } catch (e) {
+        liveBackendAvailable = false;
+      }
       return null;
+    }
+
+    function moveGroupPill(targetBtn) {
+      const pill = document.getElementById("groupTabPill");
+      if (!pill || !targetBtn) return;
+      pill.style.width = `${targetBtn.offsetWidth}px`;
+      pill.style.transform = `translateX(${targetBtn.offsetLeft}px)`;
+      pill.style.opacity = "1";
+    }
+
+    async function initCatalogFast() {
+      // Load local catalog immediately without waiting on 6 failed PHP timeouts
+      await getLocalCatalog();
+      await LoadProductGroups();
     }
 
     // 1. Load Product Groups
     async function LoadProductGroups() {
       const GridProdGroup = document.getElementById("GridProdGroup");
-
-      let data = null;
-      const res = await fetchModelData("LoadProductGroup.php");
-      if (res && res.data && res.data.length) {
-        data = res.data;
-      } else {
-        const cat = await getLocalCatalog();
-        if (cat && cat.groups) {
-          data = cat.groups;
-        }
-      }
-
-      if (!data || !data.length) {
-        data = [
-          { GroupCode: "1", GroupName: "CHEMICALS" },
-          { GroupCode: "25", GroupName: "CAT LITTER" },
-          { GroupCode: "29", GroupName: "FARM & GARDEN" },
-          { GroupCode: "6", GroupName: "FEEDS" },
-          { GroupCode: "2", GroupName: "FERTILIZERS" },
-          { GroupCode: "30", GroupName: "LIVESTOCK VETERINARY" },
-          { GroupCode: "19", GroupName: "PET FOOD" },
-          { GroupCode: "14", GroupName: "SEEDS" }
-        ];
-      }
+      let data = (catalogCache && catalogCache.groups && catalogCache.groups.length)
+        ? catalogCache.groups
+        : STATIC_GROUPS;
 
       GridProdGroup.innerHTML = data.map((item, idx) => `
         <button
-          class="group-tab flex-shrink-0 px-5 py-2 rounded-full text-xs font-display font-semibold transition-all duration-200 border ${idx === 0 ? 'bg-brand-deep text-white border-brand-deep shadow-md' : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'}"
+          type="button"
+          class="group-tab flex-shrink-0 px-4 py-2 rounded-full text-xs font-display font-bold tracking-wide ${idx === 0 ? 'text-white' : 'text-slate-300 hover:text-white'}"
           data-groupcode="${item.GroupCode}"
           data-groupname="${escapeHtml(item.GroupName)}"
+          data-active="${idx === 0 ? 'true' : 'false'}"
         >
           ${escapeHtml(item.GroupName)}
         </button>
@@ -570,10 +793,13 @@
       tabs.forEach((tab, index) => {
         tab.addEventListener("click", function () {
           tabs.forEach(t => {
-            t.className = "group-tab flex-shrink-0 px-5 py-2 rounded-full text-xs font-display font-semibold transition-all duration-200 border bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200";
+            t.dataset.active = "false";
+            t.className = "group-tab flex-shrink-0 px-4 py-2 rounded-full text-xs font-display font-bold tracking-wide text-slate-300 hover:text-white";
           });
-          this.className = "group-tab flex-shrink-0 px-5 py-2 rounded-full text-xs font-display font-semibold transition-all duration-200 border bg-brand-deep text-white border-brand-deep shadow-md";
-          
+          this.dataset.active = "true";
+          this.className = "group-tab flex-shrink-0 px-4 py-2 rounded-full text-xs font-display font-bold tracking-wide text-white";
+          moveGroupPill(this);
+
           SelectedGroupCode = this.dataset.groupcode;
           document.getElementById("activeCategoryTitle").textContent = this.dataset.groupname;
 
@@ -583,23 +809,24 @@
           LoadProductCategory(SelectedGroupCode);
         });
 
-        if (index === 0) tab.click();
+        if (index === 0) {
+          requestAnimationFrame(() => moveGroupPill(tab));
+          tab.click();
+        }
       });
     }
 
-    // 2. Load Categories for a Group
+    // 2. Load Categories for a Group (0ms from memory)
     async function LoadProductCategory(groupCode) {
       const GridProdCategory = document.getElementById("GridProdCategory");
-      GridProdCategory.innerHTML = `
-        <div class="h-6 w-16 bg-slate-100 rounded-lg animate-pulse flex-shrink-0"></div>
-        <div class="h-6 w-20 bg-slate-100 rounded-lg animate-pulse flex-shrink-0"></div>
-      `;
-
       let data = null;
-      const res = await fetchModelData("LoadProductCategory.php", { GroupCode: groupCode });
-      if (res && res.data && res.data.length) {
-        data = res.data;
-      } else {
+
+      if (liveBackendAvailable) {
+        const res = await fetchModelData("LoadProductCategory.php", { GroupCode: groupCode });
+        if (res && res.data && res.data.length) data = res.data;
+      }
+
+      if (!data) {
         const cat = await getLocalCatalog();
         if (cat && cat.categories && cat.categories[String(groupCode)]) {
           data = cat.categories[String(groupCode)];
@@ -607,7 +834,7 @@
       }
 
       if (!data || !data.length) {
-        GridProdCategory.innerHTML = `<span class="text-xs text-slate-400 py-1">All items in this group</span>`;
+        GridProdCategory.innerHTML = `<span class="text-xs text-slate-400 py-1">All items in this division</span>`;
         SelectedCategoryCode = "";
         LoadProducts();
         return;
@@ -615,7 +842,8 @@
 
       GridProdCategory.innerHTML = data.map((item, idx) => `
         <button
-          class="category-btn flex-shrink-0 px-3 py-1 rounded-lg text-xs font-medium transition-all duration-200 border ${idx === 0 ? 'bg-agri-700 text-white border-agri-700 shadow-sm' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}"
+          type="button"
+          class="category-btn btn-press flex-shrink-0 px-3 py-1 rounded-lg text-xs font-medium border ${idx === 0 ? 'bg-agri-600 text-white border-agri-500' : 'bg-[#0F2758] text-slate-300 border-white/10 hover:bg-[#143372] hover:text-white'}"
           data-categorycode="${item.CategoryCode}"
           data-categoryname="${escapeHtml(item.CategoryName)}"
         >
@@ -627,9 +855,9 @@
       buttons.forEach((btn, index) => {
         btn.addEventListener("click", function () {
           buttons.forEach(b => {
-            b.className = "category-btn flex-shrink-0 px-3 py-1 rounded-lg text-xs font-medium transition-all duration-200 border bg-white text-slate-600 border-slate-200 hover:bg-slate-50";
+            b.className = "category-btn btn-press flex-shrink-0 px-3 py-1 rounded-lg text-xs font-medium border bg-[#0F2758] text-slate-300 border-white/10 hover:bg-[#143372] hover:text-white";
           });
-          this.className = "category-btn flex-shrink-0 px-3 py-1 rounded-lg text-xs font-medium transition-all duration-200 border bg-agri-700 text-white border-agri-700 shadow-sm";
+          this.className = "category-btn btn-press flex-shrink-0 px-3 py-1 rounded-lg text-xs font-medium border bg-agri-600 text-white border-agri-500";
 
           SelectedCategoryCode = this.dataset.categorycode;
           currentPage = 1;
@@ -642,22 +870,13 @@
       });
     }
 
-    // 3. Load Products with Skeletons & Pagination
+    // 3. Load Products (0ms from memory + fast local placeholder image)
     async function LoadProducts(page = 1, append = false) {
       const productGrid = document.getElementById("productGrid");
       const loadMoreBtn = document.getElementById("loadMoreBtn");
       const emptyState = document.getElementById("emptyState");
-      const limit = 12;
-
-      if (!append) {
-        productGrid.innerHTML = Array(12).fill(`
-          <div class="rounded-2xl border border-slate-200/80 bg-white p-3 shadow-subtle animate-pulse">
-            <div class="aspect-square bg-slate-100 rounded-xl mb-3"></div>
-            <div class="h-4 bg-slate-200 rounded w-3/4 mb-1.5"></div>
-            <div class="h-3 bg-slate-100 rounded w-1/2"></div>
-          </div>
-        `).join("");
-      }
+      const visibleCountEl = document.getElementById("visibleProductCount");
+      const limit = 18;
 
       isLoading = true;
       if (loadMoreBtn) {
@@ -666,19 +885,24 @@
       }
 
       const search = (document.getElementById("searchInput")?.value || "").toLowerCase().trim();
-
       let data = null;
-      const res = await fetchModelData("LoadProducts.php", {
-        GroupCode: SelectedGroupCode,
-        CategoryCode: SelectedCategoryCode,
-        page,
-        limit,
-        search
-      });
+      let totalPoolCount = 0;
 
-      if (res && res.data && res.data.length) {
-        data = res.data;
-      } else {
+      if (liveBackendAvailable) {
+        const res = await fetchModelData("LoadProducts.php", {
+          GroupCode: SelectedGroupCode,
+          CategoryCode: SelectedCategoryCode,
+          page,
+          limit,
+          search
+        });
+        if (res && res.data && res.data.length) {
+          data = res.data;
+          totalPoolCount = data.length;
+        }
+      }
+
+      if (!data) {
         const cat = await getLocalCatalog();
         if (cat && cat.products) {
           let pool = [];
@@ -696,20 +920,24 @@
           }
 
           if (search) {
-            pool = pool.filter(p => 
+            pool = pool.filter(p =>
               (p.ProductName && p.ProductName.toLowerCase().includes(search)) ||
               (p.ProductCode && p.ProductCode.toLowerCase().includes(search))
             );
           }
 
+          totalPoolCount = pool.length;
           const start = (page - 1) * limit;
           data = pool.slice(start, start + limit);
         }
       }
 
       if (!data) data = [];
-
       if (!append) productGrid.innerHTML = "";
+
+      if (visibleCountEl) {
+        visibleCountEl.textContent = totalPoolCount || data.length;
+      }
 
       if (!data.length && !append) {
         if (emptyState) emptyState.classList.remove("hidden");
@@ -720,43 +948,45 @@
         emptyState.classList.add("hidden");
       }
 
-      data.forEach(p => {
-        const imageUrl = (!p.ImageUrl || p.ImageUrl === "N/A" || p.ImageUrl === "null")
-          ? "https://portal.farmstation.ph/CDN/FSPrcImage/default.png"
-          : p.ImageUrl;
+      const fragment = document.createDocumentFragment();
 
+      data.forEach(p => {
+        const hasCustomImage = p.ImageUrl && p.ImageUrl !== "N/A" && p.ImageUrl !== "null";
+        const imageUrl = hasCustomImage ? p.ImageUrl : LOCAL_DEFAULT_IMG;
         const safeName = escapeHtml(p.ProductName);
         productDescriptions[p.ProductCode] = p.Description || "";
 
+        // Concentric border radius: outer rounded-[20px] p-2 (20 - 8 = 12px inner radius)
         const card = document.createElement("div");
-        card.className = "product-card group rounded-2xl bg-white border border-slate-200/80 shadow-subtle hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 p-2.5 sm:p-3 flex flex-col justify-between cursor-pointer";
+        card.className = "product-card surface-card rounded-[20px] p-2 flex flex-col justify-between cursor-pointer group";
         card.dataset.image = imageUrl;
         card.dataset.name = safeName;
         card.dataset.productcode = p.ProductCode;
 
         card.innerHTML = `
-          <div class="relative aspect-square bg-[#FAFBF9] rounded-xl overflow-hidden p-2 flex items-center justify-center border border-slate-100">
+          <div class="relative aspect-square bg-[#07132B] rounded-[12px] overflow-hidden p-3 flex items-center justify-center media-outline-dark">
             <img
               src="${imageUrl}"
               alt="${safeName}"
+              width="240"
+              height="240"
               loading="lazy"
-              class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
-              onerror="this.src='https://portal.farmstation.ph/CDN/FSPrcImage/default.png'"
+              decoding="async"
+              class="w-full h-full object-contain"
+              onerror="this.onerror=function(){this.onerror=null;this.src='${CDN_DEFAULT_IMG}';};this.src='${LOCAL_DEFAULT_IMG}';"
             />
-            <div class="absolute inset-0 bg-brand-deep/0 group-hover:bg-brand-deep/10 transition-colors flex items-center justify-center">
-              <span class="opacity-0 group-hover:opacity-100 transition-opacity bg-white/95 text-brand-deep rounded-full px-3 py-1 shadow-md text-[11px] font-bold">
-                Quick View
-              </span>
-            </div>
           </div>
-          <div class="mt-2.5 text-center px-1">
-            <p class="text-slate-800 text-xs font-semibold line-clamp-2 leading-snug min-h-[32px]">
+          <div class="px-1.5 pt-2.5 pb-1 flex flex-col justify-between flex-1">
+            <span class="font-mono text-[10px] text-harvest-400 tabular-nums">SKU #${escapeHtml(p.ProductCode)}</span>
+            <p class="text-white text-xs font-display font-bold line-clamp-2 leading-snug mt-0.5 min-h-[32px]">
               ${safeName}
             </p>
           </div>
         `;
-        productGrid.appendChild(card);
+        fragment.appendChild(card);
       });
+
+      productGrid.appendChild(fragment);
 
       currentPage = page;
       hasMore = data.length === limit;
@@ -764,7 +994,7 @@
       if (loadMoreBtn) {
         loadMoreBtn.style.display = hasMore ? "inline-flex" : "none";
         loadMoreBtn.disabled = false;
-        loadMoreBtn.textContent = "Load More Items";
+        loadMoreBtn.innerHTML = `<span>Load More Catalog Items</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>`;
       }
 
       isLoading = false;
@@ -785,7 +1015,7 @@
         currentPage = 1;
         hasMore = true;
         LoadProducts(1, false);
-      }, 350);
+      }, 150);
     }
 
     function ResetSearch() {
