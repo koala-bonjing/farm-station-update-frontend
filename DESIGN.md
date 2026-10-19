@@ -2,7 +2,7 @@
 
 ## Visual Direction & Domain Anchor
 - **Domain:** Agricultural & veterinary trade supply network (52+ branches across the Bicol Region, founded in Goa, Camarines Sur in 2012).
-- **Aesthetic Persona:** **Authentic FarmStation Dark Navy Brand Identity** — deep midnight navy canvas (`#0A1936`) matching the official FarmStation logo emblem, elevated navy section wells (`#07132B`), rich navy card surfaces (`#0F2758`), high-contrast crisp white typography (`#F8FAFC`), botanical green accents (`#22C55E` / `#4ADE80`), and warm harvest gold (`#FBBF24` / `#FDE68A`).
+- **Aesthetic Persona:** **Modern Bicol Trade Supply & FarmStation Navy Identity** — warm tactile limestone paper canvas (`#FAF7F2`) with crisp white product/branch cards (`#FFFFFF`), anchored by authentic **FarmStation Navy Blue** (`#0A1936` / `#07132B`) for the top bar, sticky header, hero showcase, footer, and active tab pills (replacing dark green). Botanical field green (`#166534` / `#22C55E`) and harvest amber (`#FBBF24` / `#B45309`) serve as functional agriculture and commerce accents.
 - **Anti-Slop Contract (Impeccable Craft Floor):**
   - **Zero Eyebrow / Kicker Pills:** Section headings stand on their own typographic authority without pill badges above them.
   - **Zero Unicode Emoji Icons:** Every icon is a crisp `1.75px` or `2px` stroke SVG using `currentColor`.
@@ -18,20 +18,20 @@
 
 ---
 
-## Colors (FarmStation Dark Navy Brand Identity)
+## Colors (FarmStation Navy & Warm Canvas)
 | Token | Value | Role |
 |---|---|---|
-| `--surface-canvas` | `#0A1936` | Primary deep navy canvas (FarmStation brand blue) |
-| `--surface-elevated` | `#07132B` | Secondary elevated section & card well |
-| `--surface-card` | `#0F2758` | Dark navy card surface for products & branches |
-| `--surface-hover` | `#143372` | Interactive hover state for cards & active pills |
-| `--surface-canopy` | `#061024` | Deep midnight header/ledger/footer anchor |
-| `--ink-primary` | `#F8FAFC` | Primary crisp white heading & text |
-| `--ink-secondary` | `#CBD5E1` | Secondary high-contrast slate editorial copy |
-| `--ink-muted` | `#94A3B8` | Metadata, SKU labels, timestamps |
-| `--accent-agri` | `#22C55E` / `#4ADE80` | Botanical field green accent (leaf emblem) |
-| `--accent-harvest` | `#FBBF24` / `#FDE68A` | Harvest amber accent for verified ratings & highlights |
-| `--border-hairline` | `rgba(255, 255, 255, 0.08)` | Whisper-quiet hairline structural border |
+| `--surface-canvas` | `#FAF7F2` | Primary tactile warm limestone canvas (light background) |
+| `--surface-elevated` | `#F3EFE6` | Secondary subtle stone section well |
+| `--surface-card` | `#FFFFFF` | Crisp pure white card surface for products & branches |
+| `--surface-canopy` | `#0A1936` | FarmStation Navy brand anchor (Hero, Header, Pill, replaces dark green) |
+| `--surface-canopy-deep`| `#07132B` | FarmStation Deep Navy anchor (Top Bar, Footer) |
+| `--ink-primary` | `#111C16` | Primary deep charcoal heading & text |
+| `--ink-secondary` | `#3F4F46` | Secondary high-contrast editorial copy |
+| `--ink-muted` | `#64746B` | Metadata, SKU labels, timestamps |
+| `--accent-agri` | `#22C55E` / `#166534`| Botanical field green accent (leaf emblem) |
+| `--accent-harvest` | `#FBBF24` / `#B45309`| Harvest amber accent for verified ratings & highlights |
+| `--border-hairline` | `rgba(10, 25, 54, 0.08)`| Subtle hairline structural card and section border |
 
 ---
 

@@ -39,18 +39,18 @@
               card: '#122D65',
             },
             canvas: {
-              DEFAULT: '#0A1936',
-              stone: '#07132B',
-              linen: '#0D2044',
+              DEFAULT: '#FAF7F2',
+              stone: '#F3EFE6',
+              linen: '#EAE4D7',
             },
             canopy: {
               DEFAULT: '#0A1936',
-              deep: '#061024',
-              muted: '#122D65',
+              deep: '#07132B',
+              muted: '#0F2758',
             },
             agri: {
-              50: '#0B2918',
-              100: '#134E2D',
+              50: '#F0FDF4',
+              100: '#DCFCE7',
               400: '#4ADE80',
               500: '#22C55E',
               600: '#16A34A',
@@ -66,9 +66,9 @@
               700: '#B45309',
             },
             ink: {
-              DEFAULT: '#F8FAFC',
-              secondary: '#CBD5E1',
-              muted: '#94A3B8',
+              DEFAULT: '#111C16',
+              secondary: '#3F4F46',
+              muted: '#64746B',
             }
           },
           fontFamily: {
@@ -102,22 +102,20 @@
       --duration-normal: 250ms;
       --duration-slow: 400ms;
 
-      --surface-canvas: #0A1936;
-      --surface-elevated: #07132B;
-      --surface-card: #0F2758;
+      --surface-canvas: #FAF7F2;
+      --surface-elevated: #F3EFE6;
+      --surface-card: #FFFFFF;
       --surface-canopy: #0A1936;
 
-      /* Layered shadows for FarmStation dark navy theme */
       --shadow-card:
-        0 0 0 1px rgba(255, 255, 255, 0.08),
-        0 4px 16px -2px rgba(0, 0, 0, 0.4);
+        0 0 0 1px rgba(10, 25, 54, 0.08),
+        0 2px 6px -1px rgba(10, 25, 54, 0.06);
       --shadow-card-hover:
-        0 0 0 1px rgba(255, 255, 255, 0.18),
-        0 8px 24px -4px rgba(0, 0, 0, 0.5),
-        0 16px 32px -8px rgba(0, 0, 0, 0.6);
+        0 0 0 1px rgba(10, 25, 54, 0.16),
+        0 10px 24px -4px rgba(10, 25, 54, 0.1);
       --shadow-frame:
-        0 0 0 1px rgba(255, 255, 255, 0.12),
-        0 12px 32px -8px rgba(0, 0, 0, 0.5);
+        0 0 0 1px rgba(10, 25, 54, 0.1),
+        0 12px 32px -8px rgba(10, 25, 54, 0.08);
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -132,7 +130,7 @@
     /* Typography Polish */
     body {
       background-color: var(--surface-canvas);
-      color: #F8FAFC;
+      color: #111C16;
       font-feature-settings: "cv02", "cv03", "cv04", "cv11";
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -153,7 +151,7 @@
 
     /* Subtle 1px Image Outlines */
     .media-outline-light {
-      outline: 1px solid rgba(255, 255, 255, 0.1);
+      outline: 1px solid rgba(10, 25, 54, 0.08);
       outline-offset: -1px;
     }
 
@@ -166,7 +164,7 @@
     .surface-card {
       background: var(--surface-card);
       box-shadow: var(--shadow-card);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(10, 25, 54, 0.08);
       transition:
         transform var(--duration-normal) var(--ease-out),
         box-shadow var(--duration-normal) var(--ease-out),
@@ -177,7 +175,7 @@
     .surface-card:hover {
       transform: translateY(-2px);
       box-shadow: var(--shadow-card-hover);
-      border-color: rgba(255, 255, 255, 0.18);
+      border-color: rgba(10, 25, 54, 0.16);
     }
 
     .surface-frame {
@@ -218,7 +216,7 @@
       position: fixed;
       inset: 0;
       z-index: 80;
-      background: rgba(4, 11, 28, 0.82);
+      background: rgba(10, 25, 54, 0.75);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       opacity: 0;
@@ -272,10 +270,10 @@
 <body class="min-h-screen flex flex-col selection:bg-harvest-300 selection:text-canopy-deep">
   <!--
     DESIGN DIRECTION — FarmStation Agrivet (index.html)
-    1. Brand & Aesthetic: Bicol Field Ledger & Modern Trade Supply — tactile sun-warmed limestone (#FAF7F2), deep forest canopy ink (#0F291E), botanical field green (#166534), and harvest amber (#B45309).
+    1. Brand & Aesthetic: Modern Bicol Trade Supply & FarmStation Navy Identity — warm limestone paper (#FAF7F2), white cards (#FFFFFF), anchored by FarmStation Navy Blue (#0A1936 / #07132B) for the top bar, header, hero, footer, and active tab pills (replacing dark green).
     2. Typography: Bricolage Grotesque (display/headings, -0.025em tracking, text-wrap: balance) + Public Sans (body/UI, text-wrap: pretty, 65ch max measure) + JetBrains Mono (SKU codes, branch counts, tabular-nums).
     3. Layout & Anti-Slop Craft Floor: Zero eyebrow/kicker pills above section headings, zero unicode emoji icons, zero image hover scaling, architectural ledger strip instead of 4-card glassmorphic metric templates, editorial specifications table for careers.
-    4. Micro-Craft & Motion: Make Interfaces Feel Better concentric radii (outer = inner + padding), layered transparent --shadow-card, 1px oklch(0 0 0 / 0.08) image outlines, active:scale-[0.96], Transitions.dev --ease-out tokens + .t-modal promo flyer lightbox + .t-learn spreading chevron links, and GSAP matchMedia() scroll reveals.
+    4. Micro-Craft & Motion: Make Interfaces Feel Better concentric radii (outer = inner + padding), layered transparent --shadow-card, 1px media outlines, active:scale-[0.96], Transitions.dev --ease-out tokens + .t-modal promo flyer lightbox + .t-learn spreading chevron links, and GSAP matchMedia() scroll reveals.
     5. Image Speed Architecture: Preloaded LCP hero banner (fetchpriority="high"), 0ms synchronous render from compressed local cache (assets/cache/*.jpg, ~94% smaller than raw CDN PNGs) with automatic CDN onerror fallback and non-blocking background live API sync.
   -->
 
@@ -503,21 +501,21 @@
     <!-- =========================================================================
          SECTION 2 – FEATURED AGRICULTURAL & VETERINARY SUPPLIES
     ========================================================================= -->
-    <section class="py-16 md:py-20 bg-canvas border-b border-white/10" id="featured-section" data-reveal>
+    <section class="py-16 md:py-20 bg-canvas border-b border-black/[0.08]" id="featured-section" data-reveal>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <!-- Section Header (No Eyebrow Slop — Pure Typographic Hierarchy) -->
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4 pb-5 border-b border-white/10">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4 pb-5 border-b border-black/[0.08]">
           <div>
-            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display font-extrabold text-white">
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display font-extrabold text-ink">
               Featured Farm &amp; Livestock Supplies
             </h2>
-            <p class="text-slate-300 text-sm sm:text-base mt-1.5 max-w-[60ch]">
+            <p class="text-ink-secondary text-sm sm:text-base mt-1.5 max-w-[60ch]">
               High-demand nutritional feeds, crop protection formulas, and veterinary essentials stocked across our regional branches.
             </p>
           </div>
 
-          <a href="Products.html" class="t-learn text-agri-400 hover:text-harvest-300 font-display font-bold text-sm shrink-0">
+          <a href="Products.html" class="t-learn text-agri-800 hover:text-canopy font-display font-bold text-sm shrink-0">
             <span>Explore All 815+ Catalog Items</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
           </a>
@@ -526,42 +524,42 @@
         <!-- Supply Line Specification Strip (Stroke SVG Icons, Zero Emojis) -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
           <a href="Products.html" class="surface-card rounded-[16px] p-3.5 flex items-center gap-3.5">
-            <div class="w-10 h-10 rounded-[10px] bg-agri-500/15 border border-agri-500/30 text-agri-400 flex items-center justify-center shrink-0">
+            <div class="w-10 h-10 rounded-[10px] bg-agri-50 border border-agri-200 text-agri-800 flex items-center justify-center shrink-0">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
             </div>
             <div>
-              <div class="font-display font-bold text-sm text-white">Seeds &amp; Fertilizers</div>
-              <div class="text-xs text-slate-400">Hybrid rice, corn &amp; foliar</div>
+              <div class="font-display font-bold text-sm text-ink">Seeds &amp; Fertilizers</div>
+              <div class="text-xs text-ink-muted">Hybrid rice, corn &amp; foliar</div>
             </div>
           </a>
 
           <a href="Products.html" class="surface-card rounded-[16px] p-3.5 flex items-center gap-3.5">
-            <div class="w-10 h-10 rounded-[10px] bg-agri-500/15 border border-agri-500/30 text-agri-400 flex items-center justify-center shrink-0">
+            <div class="w-10 h-10 rounded-[10px] bg-agri-50 border border-agri-200 text-agri-800 flex items-center justify-center shrink-0">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
             </div>
             <div>
-              <div class="font-display font-bold text-sm text-white">Crop Protection</div>
-              <div class="text-xs text-slate-400">Herbicides &amp; fungicides</div>
+              <div class="font-display font-bold text-sm text-ink">Crop Protection</div>
+              <div class="text-xs text-ink-muted">Herbicides &amp; fungicides</div>
             </div>
           </a>
 
           <a href="Products.html" class="surface-card rounded-[16px] p-3.5 flex items-center gap-3.5">
-            <div class="w-10 h-10 rounded-[10px] bg-agri-500/15 border border-agri-500/30 text-agri-400 flex items-center justify-center shrink-0">
+            <div class="w-10 h-10 rounded-[10px] bg-agri-50 border border-agri-200 text-agri-800 flex items-center justify-center shrink-0">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
             </div>
             <div>
-              <div class="font-display font-bold text-sm text-white">Feeds &amp; Nutrition</div>
-              <div class="text-xs text-slate-400">Hog, poultry, gamefowl &amp; pet</div>
+              <div class="font-display font-bold text-sm text-ink">Feeds &amp; Nutrition</div>
+              <div class="text-xs text-ink-muted">Hog, poultry, gamefowl &amp; pet</div>
             </div>
           </a>
 
           <a href="Products.html" class="surface-card rounded-[16px] p-3.5 flex items-center gap-3.5">
-            <div class="w-10 h-10 rounded-[10px] bg-agri-500/15 border border-agri-500/30 text-agri-400 flex items-center justify-center shrink-0">
+            <div class="w-10 h-10 rounded-[10px] bg-agri-50 border border-agri-200 text-agri-800 flex items-center justify-center shrink-0">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
             </div>
             <div>
-              <div class="font-display font-bold text-sm text-white">Veterinary &amp; Biologics</div>
-              <div class="text-xs text-slate-400">Vaccines, vitamins &amp; dewormers</div>
+              <div class="font-display font-bold text-sm text-ink">Veterinary &amp; Biologics</div>
+              <div class="text-xs text-ink-muted">Vaccines, vitamins &amp; dewormers</div>
             </div>
           </a>
         </div>
@@ -575,13 +573,13 @@
     <!-- =========================================================================
          SECTION 3 – REGIONAL BRANCH NETWORK & PROVINCIAL DIRECTORY
     ========================================================================= -->
-    <section class="py-16 md:py-24 bg-canvas-stone border-b border-white/10" id="branches-section" data-reveal>
+    <section class="py-16 md:py-24 bg-canvas-stone border-b border-black/[0.08]" id="branches-section" data-reveal>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
 
           <!-- Left: Storefront Image Frame (Concentric radius: outer 24px - p-2.5 10px = inner 14px) -->
           <div class="lg:col-span-6">
-            <div class="rounded-[24px] p-2.5 bg-[#0F2758] border border-white/10 surface-frame">
+            <div class="rounded-[24px] p-2.5 bg-white border border-black/[0.08] surface-frame">
               <div class="relative rounded-[14px] overflow-hidden aspect-[4/3] bg-canopy-deep media-outline-dark">
                 <img
                   src="assets/cache/fs-store.jpg"
@@ -611,60 +609,60 @@
 
           <!-- Right: Provincial Distribution Ledger -->
           <div class="lg:col-span-6 space-y-6">
-            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display font-extrabold text-white">
-              Accessible Supply Points in All <span id="BranchCounter2" class="text-agri-400 tabular-nums">52</span> Locations
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display font-extrabold text-ink">
+              Accessible Supply Points in All <span id="BranchCounter2" class="text-agri-800 tabular-nums">52</span> Locations
             </h2>
 
-            <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+            <p class="text-ink-secondary text-sm sm:text-base leading-relaxed">
               Every FarmStation branch is positioned along primary agricultural trading corridors and municipal markets so farmers and livestock raisers never have to travel far for authentic inputs.
             </p>
 
             <!-- Province Index Table (Tabular Numerals, Direct Links) -->
-            <div class="bg-[#0F2758] border border-white/10 rounded-[20px] p-2 surface-card">
-              <div class="rounded-[12px] divide-y divide-white/10 border border-white/10 overflow-hidden">
-                <a href="Branches.html?province=Camarines+Sur" class="flex items-center justify-between px-4 py-3 hover:bg-[#143372] transition-colors">
+            <div class="bg-white border border-black/[0.08] rounded-[20px] p-2 surface-card">
+              <div class="rounded-[12px] divide-y divide-black/[0.06] border border-black/[0.06] overflow-hidden">
+                <a href="Branches.html?province=Camarines+Sur" class="flex items-center justify-between px-4 py-3 hover:bg-canvas transition-colors">
                   <div class="flex items-center gap-3">
-                    <span class="font-mono text-xs text-slate-400 tabular-nums">01</span>
-                    <span class="font-display font-bold text-sm text-white">Camarines Sur</span>
-                    <span class="text-xs text-slate-400 hidden sm:inline">Goa, Naga, Pili, Iriga, Nabua, Libmanan</span>
+                    <span class="font-mono text-xs text-ink-muted tabular-nums">01</span>
+                    <span class="font-display font-bold text-sm text-ink">Camarines Sur</span>
+                    <span class="text-xs text-ink-muted hidden sm:inline">Goa, Naga, Pili, Iriga, Nabua, Libmanan</span>
                   </div>
-                  <span class="font-mono text-xs font-semibold text-agri-400 bg-agri-500/15 border border-agri-500/30 px-2.5 py-0.5 rounded-md tabular-nums">16 Branches</span>
+                  <span class="font-mono text-xs font-semibold text-agri-800 bg-agri-50 border border-agri-200 px-2.5 py-0.5 rounded-md tabular-nums">16 Branches</span>
                 </a>
 
-                <a href="Branches.html?province=Albay" class="flex items-center justify-between px-4 py-3 hover:bg-[#143372] transition-colors">
+                <a href="Branches.html?province=Albay" class="flex items-center justify-between px-4 py-3 hover:bg-canvas transition-colors">
                   <div class="flex items-center gap-3">
-                    <span class="font-mono text-xs text-slate-400 tabular-nums">02</span>
-                    <span class="font-display font-bold text-sm text-white">Albay</span>
-                    <span class="text-xs text-slate-400 hidden sm:inline">Legazpi, Tabaco, Ligao, Polangui, Daraga</span>
+                    <span class="font-mono text-xs text-ink-muted tabular-nums">02</span>
+                    <span class="font-display font-bold text-sm text-ink">Albay</span>
+                    <span class="text-xs text-ink-muted hidden sm:inline">Legazpi, Tabaco, Ligao, Polangui, Daraga</span>
                   </div>
-                  <span class="font-mono text-xs font-semibold text-agri-400 bg-agri-500/15 border border-agri-500/30 px-2.5 py-0.5 rounded-md tabular-nums">14 Branches</span>
+                  <span class="font-mono text-xs font-semibold text-agri-800 bg-agri-50 border border-agri-200 px-2.5 py-0.5 rounded-md tabular-nums">14 Branches</span>
                 </a>
 
-                <a href="Branches.html?province=Sorsogon" class="flex items-center justify-between px-4 py-3 hover:bg-[#143372] transition-colors">
+                <a href="Branches.html?province=Sorsogon" class="flex items-center justify-between px-4 py-3 hover:bg-canvas transition-colors">
                   <div class="flex items-center gap-3">
-                    <span class="font-mono text-xs text-slate-400 tabular-nums">03</span>
-                    <span class="font-display font-bold text-sm text-white">Sorsogon</span>
-                    <span class="text-xs text-slate-400 hidden sm:inline">Sorsogon City, Irosin, Gubat, Bulan</span>
+                    <span class="font-mono text-xs text-ink-muted tabular-nums">03</span>
+                    <span class="font-display font-bold text-sm text-ink">Sorsogon</span>
+                    <span class="text-xs text-ink-muted hidden sm:inline">Sorsogon City, Irosin, Gubat, Bulan</span>
                   </div>
-                  <span class="font-mono text-xs font-semibold text-agri-400 bg-agri-500/15 border border-agri-500/30 px-2.5 py-0.5 rounded-md tabular-nums">8 Branches</span>
+                  <span class="font-mono text-xs font-semibold text-agri-800 bg-agri-50 border border-agri-200 px-2.5 py-0.5 rounded-md tabular-nums">8 Branches</span>
                 </a>
 
-                <a href="Branches.html?province=Camarines+Norte" class="flex items-center justify-between px-4 py-3 hover:bg-[#143372] transition-colors">
+                <a href="Branches.html?province=Camarines+Norte" class="flex items-center justify-between px-4 py-3 hover:bg-canvas transition-colors">
                   <div class="flex items-center gap-3">
-                    <span class="font-mono text-xs text-slate-400 tabular-nums">04</span>
-                    <span class="font-display font-bold text-sm text-white">Camarines Norte</span>
-                    <span class="text-xs text-slate-400 hidden sm:inline">Daet, Labo, Talobatib, Sta. Elena</span>
+                    <span class="font-mono text-xs text-ink-muted tabular-nums">04</span>
+                    <span class="font-display font-bold text-sm text-ink">Camarines Norte</span>
+                    <span class="text-xs text-ink-muted hidden sm:inline">Daet, Labo, Talobatib, Sta. Elena</span>
                   </div>
-                  <span class="font-mono text-xs font-semibold text-agri-400 bg-agri-500/15 border border-agri-500/30 px-2.5 py-0.5 rounded-md tabular-nums">6 Branches</span>
+                  <span class="font-mono text-xs font-semibold text-agri-800 bg-agri-50 border border-agri-200 px-2.5 py-0.5 rounded-md tabular-nums">6 Branches</span>
                 </a>
 
-                <a href="Branches.html?province=Catanduanes" class="flex items-center justify-between px-4 py-3 hover:bg-[#143372] transition-colors">
+                <a href="Branches.html?province=Catanduanes" class="flex items-center justify-between px-4 py-3 hover:bg-canvas transition-colors">
                   <div class="flex items-center gap-3">
-                    <span class="font-mono text-xs text-slate-400 tabular-nums">05</span>
-                    <span class="font-display font-bold text-sm text-white">Catanduanes &amp; Masbate</span>
-                    <span class="text-xs text-slate-400 hidden sm:inline">Virac, San Andres, Masbate City, Cataingan</span>
+                    <span class="font-mono text-xs text-ink-muted tabular-nums">05</span>
+                    <span class="font-display font-bold text-sm text-ink">Catanduanes &amp; Masbate</span>
+                    <span class="text-xs text-ink-muted hidden sm:inline">Virac, San Andres, Masbate City, Cataingan</span>
                   </div>
-                  <span class="font-mono text-xs font-semibold text-agri-400 bg-agri-500/15 border border-agri-500/30 px-2.5 py-0.5 rounded-md tabular-nums">8 Branches</span>
+                  <span class="font-mono text-xs font-semibold text-agri-800 bg-agri-50 border border-agri-200 px-2.5 py-0.5 rounded-md tabular-nums">8 Branches</span>
                 </a>
               </div>
             </div>
@@ -684,20 +682,20 @@
     <!-- =========================================================================
          SECTION 4 – SEASONAL ADVISORIES, PROMOS & EVENTS
     ========================================================================= -->
-    <section class="py-16 md:py-20 bg-canvas border-b border-white/10" id="promos-section" data-reveal>
+    <section class="py-16 md:py-20 bg-canvas border-b border-black/[0.08]" id="promos-section" data-reveal>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4 pb-5 border-b border-white/10">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4 pb-5 border-b border-black/[0.08]">
           <div>
-            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display font-extrabold text-white">
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display font-extrabold text-ink">
               Seasonal Promos &amp; Field Advisories
             </h2>
-            <p class="text-slate-300 text-sm sm:text-base mt-1.5 max-w-[60ch]">
+            <p class="text-ink-secondary text-sm sm:text-base mt-1.5 max-w-[60ch]">
               Current bundle discounts, raffle announcements, and technical grower events across all FarmStation branches. Click any flyer to inspect full details.
             </p>
           </div>
 
-          <button id="BtnViewAllPromos" onclick="window.open('https://www.facebook.com/farmstationofficial', '_blank')" class="t-learn text-agri-400 hover:text-harvest-300 font-display font-bold text-sm shrink-0">
+          <button id="BtnViewAllPromos" onclick="window.open('https://www.facebook.com/farmstationofficial', '_blank')" class="t-learn text-agri-800 hover:text-canopy font-display font-bold text-sm shrink-0">
             <span>Follow Daily Updates on Facebook</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
           </button>
@@ -712,43 +710,43 @@
     <!-- =========================================================================
          SECTION 5 – COMPANY LEDGER & HERITAGE (FOUNDED IN GOA, CAMARINES SUR)
     ========================================================================= -->
-    <section class="py-16 md:py-24 bg-canvas-stone border-b border-white/10" id="story-section" data-reveal>
+    <section class="py-16 md:py-24 bg-canvas-stone border-b border-black/[0.08]" id="story-section" data-reveal>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
           <!-- Left: Editorial Narrative & Chronological Ledger -->
           <div class="lg:col-span-6 space-y-6">
-            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display font-extrabold text-white leading-tight">
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display font-extrabold text-ink leading-tight">
               Built in Partido, Serving Every Bicolano Farming Community
             </h2>
 
-            <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-              Farm Station Inc. traces its roots to <strong class="text-white font-semibold">Goa, Camarines Sur</strong>, beginning as a dedicated local agricultural and veterinary supply store before incorporating in <strong class="text-white font-semibold">2012</strong>. Through dependable stock availability, technical field guidance, and fair trade pricing, we have grown into the region's most accessible agri-vet retail network.
+            <p class="text-ink-secondary text-sm sm:text-base leading-relaxed">
+              Farm Station Inc. traces its roots to <strong class="text-ink font-semibold">Goa, Camarines Sur</strong>, beginning as a dedicated local agricultural and veterinary supply store before incorporating in <strong class="text-ink font-semibold">2012</strong>. Through dependable stock availability, technical field guidance, and fair trade pricing, we have grown into the region's most accessible agri-vet retail network.
             </p>
 
             <!-- Chronological Ledger Table -->
-            <div class="border-t border-white/10 divide-y divide-white/10">
+            <div class="border-t border-black/[0.08] divide-y divide-black/[0.08]">
               <div class="py-4 flex items-start gap-5">
-                <span class="font-mono text-sm font-semibold text-harvest-400 tabular-nums w-16 shrink-0 pt-0.5">ORIGIN</span>
+                <span class="font-mono text-sm font-semibold text-harvest-700 tabular-nums w-16 shrink-0 pt-0.5">ORIGIN</span>
                 <div>
-                  <h3 class="font-display font-bold text-white text-base">Partido Agricultural Supply Roots</h3>
-                  <p class="text-slate-300 text-xs sm:text-sm mt-1">Established in Goa, Camarines Sur to provide local rice, corn, and backyard livestock growers with authentic fertilizers and crop protection.</p>
+                  <h3 class="font-display font-bold text-ink text-base">Partido Agricultural Supply Roots</h3>
+                  <p class="text-ink-secondary text-xs sm:text-sm mt-1">Established in Goa, Camarines Sur to provide local rice, corn, and backyard livestock growers with authentic fertilizers and crop protection.</p>
                 </div>
               </div>
 
               <div class="py-4 flex items-start gap-5">
-                <span class="font-mono text-sm font-semibold text-harvest-400 tabular-nums w-16 shrink-0 pt-0.5">2012</span>
+                <span class="font-mono text-sm font-semibold text-harvest-700 tabular-nums w-16 shrink-0 pt-0.5">2012</span>
                 <div>
-                  <h3 class="font-display font-bold text-white text-base">Incorporated as Farm Station Inc.</h3>
-                  <p class="text-slate-300 text-xs sm:text-sm mt-1">Expanded into a full-line agri-vet store integrating commercial feeds, veterinary pharmaceuticals, biologics, and specialty seeds.</p>
+                  <h3 class="font-display font-bold text-ink text-base">Incorporated as Farm Station Inc.</h3>
+                  <p class="text-ink-secondary text-xs sm:text-sm mt-1">Expanded into a full-line agri-vet store integrating commercial feeds, veterinary pharmaceuticals, biologics, and specialty seeds.</p>
                 </div>
               </div>
 
               <div class="py-4 flex items-start gap-5">
-                <span class="font-mono text-sm font-semibold text-harvest-400 tabular-nums w-16 shrink-0 pt-0.5">TODAY</span>
+                <span class="font-mono text-sm font-semibold text-harvest-700 tabular-nums w-16 shrink-0 pt-0.5">TODAY</span>
                 <div>
-                  <h3 class="font-display font-bold text-white text-base">52+ Branches Across Six Provinces</h3>
-                  <p class="text-slate-300 text-xs sm:text-sm mt-1">Serving thousands of farmers, poultry raisers, and pet owners daily across Camarines Sur, Albay, Sorsogon, Camarines Norte, Catanduanes, and Masbate.</p>
+                  <h3 class="font-display font-bold text-ink text-base">52+ Branches Across Six Provinces</h3>
+                  <p class="text-ink-secondary text-xs sm:text-sm mt-1">Serving thousands of farmers, poultry raisers, and pet owners daily across Camarines Sur, Albay, Sorsogon, Camarines Norte, Catanduanes, and Masbate.</p>
                 </div>
               </div>
             </div>
@@ -758,8 +756,8 @@
           <div class="lg:col-span-6">
             <div class="grid grid-cols-12 gap-4 items-stretch">
               <div class="col-span-6 flex flex-col gap-4">
-                <div class="rounded-[20px] p-2 bg-[#0F2758] border border-white/10 surface-card">
-                  <div class="rounded-[12px] overflow-hidden aspect-[4/3] media-outline-dark bg-[#07132B]">
+                <div class="rounded-[20px] p-2 bg-white border border-black/[0.08] surface-card">
+                  <div class="rounded-[12px] overflow-hidden aspect-[4/3] media-outline-light bg-canvas-stone">
                     <img
                       src="assets/cache/history-1.jpg"
                       onerror="this.onerror=null;this.src='https://portal.farmstation.ph/CDN/MainSite/FsHistory/History1.png'"
@@ -772,8 +770,8 @@
                     />
                   </div>
                 </div>
-                <div class="rounded-[20px] p-2 bg-[#0F2758] border border-white/10 surface-card">
-                  <div class="rounded-[12px] overflow-hidden aspect-[4/3] media-outline-dark bg-[#07132B]">
+                <div class="rounded-[20px] p-2 bg-white border border-black/[0.08] surface-card">
+                  <div class="rounded-[12px] overflow-hidden aspect-[4/3] media-outline-light bg-canvas-stone">
                     <img
                       src="assets/cache/history-2.jpg"
                       onerror="this.onerror=null;this.src='https://portal.farmstation.ph/CDN/MainSite/FsHistory/History2.png'"
@@ -789,8 +787,8 @@
               </div>
 
               <div class="col-span-6 flex">
-                <div class="rounded-[20px] p-2 bg-[#0F2758] border border-white/10 surface-card w-full flex flex-col">
-                  <div class="rounded-[12px] overflow-hidden flex-1 min-h-[280px] media-outline-dark bg-[#07132B]">
+                <div class="rounded-[20px] p-2 bg-white border border-black/[0.08] surface-card w-full flex flex-col">
+                  <div class="rounded-[12px] overflow-hidden flex-1 min-h-[280px] media-outline-light bg-canvas-stone">
                     <img
                       src="assets/cache/history-3.jpg"
                       onerror="this.onerror=null;this.src='https://portal.farmstation.ph/CDN/MainSite/FsHistory/History3.png'"
@@ -814,32 +812,32 @@
     <!-- =========================================================================
          SECTION 6 – CAREERS & FIELD RECRUITMENT (EDITORIAL LEDGER, ZERO EMOJIS)
     ========================================================================= -->
-    <section class="py-16 md:py-24 bg-canvas text-white border-b border-white/10" id="careers-section" data-reveal>
+    <section class="py-16 md:py-24 bg-canvas text-ink border-b border-black/[0.08]" id="careers-section" data-reveal>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
 
           <!-- Left: Career Proposition & Field Standards -->
           <div class="lg:col-span-6 space-y-6">
-            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display font-extrabold text-white leading-tight">
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display font-extrabold text-ink leading-tight">
               Build a Career Strengthening Regional Food Security
             </h2>
 
-            <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+            <p class="text-ink-secondary text-sm sm:text-base leading-relaxed">
               Our store teams, licensed agriculturists, veterinarians, and logistics specialists are the backbone of Bicol's agricultural supply chain. We invest in structured technical training and long-term career progression.
             </p>
 
-            <dl class="border-t border-white/15 divide-y divide-white/10 text-sm">
+            <dl class="border-t border-black/[0.08] divide-y divide-black/[0.08] text-sm">
               <div class="py-3.5 flex items-start justify-between gap-4">
-                <dt class="font-display font-bold text-white">Technical Agronomy &amp; Vet Training</dt>
-                <dd class="text-slate-300 text-xs sm:text-sm text-right max-w-xs">Continuous product certification, diagnostics, and livestock nutrition workshops.</dd>
+                <dt class="font-display font-bold text-ink">Technical Agronomy &amp; Vet Training</dt>
+                <dd class="text-ink-secondary text-xs sm:text-sm text-right max-w-xs">Continuous product certification, diagnostics, and livestock nutrition workshops.</dd>
               </div>
               <div class="py-3.5 flex items-start justify-between gap-4">
-                <dt class="font-display font-bold text-white">Clear Store-to-Area Leadership Track</dt>
-                <dd class="text-slate-300 text-xs sm:text-sm text-right max-w-xs">Merit-based progression from branch staff to store supervisor and area manager.</dd>
+                <dt class="font-display font-bold text-ink">Clear Store-to-Area Leadership Track</dt>
+                <dd class="text-ink-secondary text-xs sm:text-sm text-right max-w-xs">Merit-based progression from branch staff to store supervisor and area manager.</dd>
               </div>
               <div class="py-3.5 flex items-start justify-between gap-4">
-                <dt class="font-display font-bold text-white">Licensed Professional Mentorship</dt>
-                <dd class="text-slate-300 text-xs sm:text-sm text-right max-w-xs">Collaborate directly with seasoned veterinarians and registered agriculturists.</dd>
+                <dt class="font-display font-bold text-ink">Licensed Professional Mentorship</dt>
+                <dd class="text-ink-secondary text-xs sm:text-sm text-right max-w-xs">Collaborate directly with seasoned veterinarians and registered agriculturists.</dd>
               </div>
             </dl>
 
@@ -848,7 +846,7 @@
                 <span>View Open Positions on Facebook</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
               </button>
-              <button id="BtnFSCareers" class="btn-press inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 text-white border border-white/15 font-display font-semibold text-xs tracking-wide px-5 py-3.5 rounded-full">
+              <button id="BtnFSCareers" class="btn-press inline-flex items-center gap-2 bg-[#0A1936] hover:bg-[#07132B] text-white font-display font-semibold text-xs tracking-wide px-5 py-3.5 rounded-full">
                 <span>Visit @fscareers Page</span>
               </button>
             </div>
@@ -856,53 +854,53 @@
 
           <!-- Right: Open Roles Board (Concentric Card) -->
           <div class="lg:col-span-6">
-            <div class="rounded-[24px] p-2.5 bg-white/[0.05] border border-white/10">
-              <div class="bg-[#0F2758] border border-white/10 rounded-[14px] p-6 sm:p-7 text-white">
-                <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-5">
+            <div class="rounded-[24px] p-2.5 bg-canvas-stone border border-black/[0.08]">
+              <div class="bg-white border border-black/[0.08] rounded-[14px] p-6 sm:p-7 text-ink surface-card">
+                <div class="flex items-center justify-between border-b border-black/[0.08] pb-4 mb-5">
                   <div>
-                    <h3 class="font-display font-extrabold text-lg sm:text-xl text-white">Current Regional Openings</h3>
-                    <p class="text-xs text-slate-400 mt-0.5">Full-time branch &amp; field roles across Bicol</p>
+                    <h3 class="font-display font-extrabold text-lg sm:text-xl text-ink">Current Regional Openings</h3>
+                    <p class="text-xs text-ink-muted mt-0.5">Full-time branch &amp; field roles across Bicol</p>
                   </div>
-                  <span class="font-mono text-[11px] font-semibold text-agri-400 bg-agri-500/15 border border-agri-500/30 px-2.5 py-1 rounded-md">HIRING NOW</span>
+                  <span class="font-mono text-[11px] font-semibold text-agri-800 bg-agri-50 border border-agri-200 px-2.5 py-1 rounded-md">HIRING NOW</span>
                 </div>
 
-                <div class="divide-y divide-white/10">
+                <div class="divide-y divide-black/[0.06]">
                   <div class="py-3.5 flex items-center justify-between gap-4">
                     <div>
-                      <div class="font-display font-bold text-sm text-white">Licensed Agriculturists &amp; Agronomists</div>
-                      <div class="text-xs text-slate-400 mt-0.5">Technical Sales &amp; Grower Consultation &middot; Full-Time</div>
+                      <div class="font-display font-bold text-sm text-ink">Licensed Agriculturists &amp; Agronomists</div>
+                      <div class="text-xs text-ink-muted mt-0.5">Technical Sales &amp; Grower Consultation &middot; Full-Time</div>
                     </div>
-                    <span class="font-mono text-[11px] font-semibold text-harvest-300 bg-amber-500/15 border border-amber-500/30 px-2.5 py-1 rounded">Priority</span>
+                    <span class="font-mono text-[11px] font-semibold text-harvest-700 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded">Priority</span>
                   </div>
 
                   <div class="py-3.5 flex items-center justify-between gap-4">
                     <div>
-                      <div class="font-display font-bold text-sm text-white">Branch Store Supervisors &amp; Cashiers</div>
-                      <div class="text-xs text-slate-400 mt-0.5">Retail Operations &amp; Inventory Control &middot; Albay &amp; CamSur</div>
+                      <div class="font-display font-bold text-sm text-ink">Branch Store Supervisors &amp; Cashiers</div>
+                      <div class="text-xs text-ink-muted mt-0.5">Retail Operations &amp; Inventory Control &middot; Albay &amp; CamSur</div>
                     </div>
-                    <span class="font-mono text-[11px] font-semibold text-agri-400 bg-agri-500/15 border border-agri-500/30 px-2.5 py-1 rounded">Open</span>
+                    <span class="font-mono text-[11px] font-semibold text-agri-800 bg-agri-50 border border-agri-200 px-2.5 py-1 rounded">Open</span>
                   </div>
 
                   <div class="py-3.5 flex items-center justify-between gap-4">
                     <div>
-                      <div class="font-display font-bold text-sm text-white">Licensed Veterinarians &amp; Vet Techs</div>
-                      <div class="text-xs text-slate-400 mt-0.5">Animal Health &amp; Biologics Advisory &middot; Regional</div>
+                      <div class="font-display font-bold text-sm text-ink">Licensed Veterinarians &amp; Vet Techs</div>
+                      <div class="text-xs text-ink-muted mt-0.5">Animal Health &amp; Biologics Advisory &middot; Regional</div>
                     </div>
-                    <span class="font-mono text-[11px] font-semibold text-agri-400 bg-agri-500/15 border border-agri-500/30 px-2.5 py-1 rounded">Open</span>
+                    <span class="font-mono text-[11px] font-semibold text-agri-800 bg-agri-50 border border-agri-200 px-2.5 py-1 rounded">Open</span>
                   </div>
 
                   <div class="py-3.5 flex items-center justify-between gap-4">
                     <div>
-                      <div class="font-display font-bold text-sm text-white">Warehouse &amp; Fleet Logistics Personnel</div>
-                      <div class="text-xs text-slate-400 mt-0.5">Supply Chain Distribution &middot; Goa HQ &amp; Hubs</div>
+                      <div class="font-display font-bold text-sm text-ink">Warehouse &amp; Fleet Logistics Personnel</div>
+                      <div class="text-xs text-ink-muted mt-0.5">Supply Chain Distribution &middot; Goa HQ &amp; Hubs</div>
                     </div>
-                    <span class="font-mono text-[11px] font-semibold text-agri-400 bg-agri-500/15 border border-agri-500/30 px-2.5 py-1 rounded">Open</span>
+                    <span class="font-mono text-[11px] font-semibold text-agri-800 bg-agri-50 border border-agri-200 px-2.5 py-1 rounded">Open</span>
                   </div>
                 </div>
 
-                <div class="mt-5 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+                <div class="mt-5 pt-4 border-t border-black/[0.08] flex items-center justify-between text-xs text-ink-muted">
                   <span>Send resumes via our official recruitment page</span>
-                  <a href="https://www.facebook.com/fscareers" target="_blank" rel="noopener noreferrer" class="t-learn font-display font-bold text-agri-400 hover:text-harvest-300">
+                  <a href="https://www.facebook.com/fscareers" target="_blank" rel="noopener noreferrer" class="t-learn font-display font-bold text-agri-800 hover:text-canopy">
                     <span>Apply Now</span>
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                   </a>
@@ -920,21 +918,21 @@
        PROMO FLYER LIGHTBOX MODAL (Transitions.dev .t-modal)
   ========================================================================= -->
   <div id="promoModalBackdrop" class="t-modal-backdrop flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="promoModalTitle" onclick="if(event.target === this) closePromoModal()">
-    <div class="t-modal-dialog bg-[#0F2758] border border-white/15 rounded-[24px] p-2.5 max-w-lg w-full surface-frame text-white">
-      <div class="rounded-[14px] overflow-hidden bg-[#0A1936] border border-white/10">
-        <div class="flex items-center justify-between px-4 py-3 bg-[#0A1936] border-b border-white/10">
-          <span id="promoModalTitle" class="font-display font-bold text-sm text-white">FarmStation Advisory &amp; Promo Flyer</span>
+    <div class="t-modal-dialog bg-white border border-black/10 rounded-[24px] p-2.5 max-w-lg w-full surface-frame text-ink shadow-2xl">
+      <div class="rounded-[14px] overflow-hidden bg-canvas-stone border border-black/[0.08]">
+        <div class="flex items-center justify-between px-4 py-3 bg-white border-b border-black/[0.08]">
+          <span id="promoModalTitle" class="font-display font-bold text-sm text-ink">FarmStation Advisory &amp; Promo Flyer</span>
           <div class="flex items-center gap-2">
-            <a id="promoModalExternal" href="https://www.facebook.com/farmstationofficial" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-agri-400 hover:underline px-2 py-1">
+            <a id="promoModalExternal" href="https://www.facebook.com/farmstationofficial" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-agri-800 hover:underline px-2 py-1">
               Open Original
             </a>
-            <button onclick="closePromoModal()" aria-label="Close modal" class="btn-press w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center">
+            <button onclick="closePromoModal()" aria-label="Close modal" class="btn-press w-8 h-8 rounded-lg bg-canvas-stone hover:bg-black/10 text-ink flex items-center justify-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
           </div>
         </div>
-        <div class="p-3 bg-[#07132B] flex items-center justify-center max-h-[75vh] overflow-auto">
-          <img id="promoModalImg" src="assets/cache/promo-1.jpg" alt="FarmStation Promo Flyer" class="max-h-[68vh] w-auto object-contain rounded-[10px] media-outline-dark" />
+        <div class="p-3 bg-canvas-stone flex items-center justify-center max-h-[75vh] overflow-auto">
+          <img id="promoModalImg" src="assets/cache/promo-1.jpg" alt="FarmStation Promo Flyer" class="max-h-[68vh] w-auto object-contain rounded-[10px] media-outline-light" />
         </div>
       </div>
     </div>
@@ -1286,7 +1284,7 @@
         card.href = "Products.html";
         card.className = "surface-card rounded-[20px] p-2 flex flex-col justify-between group focus:outline-none";
         card.innerHTML = `
-          <div class="relative w-full aspect-square bg-[#07132B] rounded-[12px] overflow-hidden p-3 flex items-center justify-center media-outline-dark">
+          <div class="relative w-full aspect-square bg-canvas-stone rounded-[12px] overflow-hidden p-3 flex items-center justify-center media-outline-light">
             <img
               src="${fastSrc}"
               onerror="this.onerror=null;this.src='${remoteSrc}'"
@@ -1300,10 +1298,10 @@
           </div>
           <div class="px-2 pt-3 pb-1.5 flex items-center justify-between gap-2">
             <div>
-              <div class="font-mono text-[10px] text-harvest-400 tabular-nums">FS-CAT-0${idx + 1}</div>
-              <div class="font-display font-bold text-xs sm:text-sm text-white mt-0.5">${label}</div>
+              <div class="font-mono text-[10px] text-harvest-700 tabular-nums">FS-CAT-0${idx + 1}</div>
+              <div class="font-display font-bold text-xs sm:text-sm text-ink mt-0.5">${label}</div>
             </div>
-            <span class="w-7 h-7 rounded-full bg-white/10 group-hover:bg-harvest-400 group-hover:text-canopy text-white flex items-center justify-center transition-colors shrink-0">
+            <span class="w-7 h-7 rounded-full bg-canvas-stone group-hover:bg-[#0A1936] group-hover:text-white text-ink flex items-center justify-center transition-colors shrink-0">
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             </span>
           </div>
@@ -1363,7 +1361,7 @@
         card.onclick = () => openPromoModal(fastSrc, remoteSrc, title);
 
         card.innerHTML = `
-          <div class="relative w-full aspect-[3/4] bg-[#07132B] rounded-[12px] overflow-hidden media-outline-dark">
+          <div class="relative w-full aspect-[3/4] bg-canvas-stone rounded-[12px] overflow-hidden media-outline-light">
             <img
               src="${fastSrc}"
               onerror="this.onerror=null;this.src='${remoteSrc}'"
@@ -1377,10 +1375,10 @@
           </div>
           <div class="px-2 pt-3 pb-1.5 flex items-center justify-between gap-2 w-full">
             <div>
-              <div class="font-mono text-[10px] text-harvest-400 tabular-nums">BULLETIN 0${idx + 1}</div>
-              <div class="font-display font-bold text-xs sm:text-sm text-white mt-0.5 line-clamp-1">${title}</div>
+              <div class="font-mono text-[10px] text-harvest-700 tabular-nums">BULLETIN 0${idx + 1}</div>
+              <div class="font-display font-bold text-xs sm:text-sm text-ink mt-0.5 line-clamp-1">${title}</div>
             </div>
-            <span class="text-xs font-semibold text-agri-400 group-hover:text-harvest-300 shrink-0">Inspect</span>
+            <span class="text-xs font-semibold text-agri-800 group-hover:text-harvest-700 shrink-0">Inspect</span>
           </div>
         `;
         grid.appendChild(card);

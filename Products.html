@@ -35,18 +35,18 @@
               card: '#122D65',
             },
             canvas: {
-              DEFAULT: '#0A1936',
-              stone: '#07132B',
-              linen: '#0D2044',
+              DEFAULT: '#FAF7F2',
+              stone: '#F3EFE6',
+              linen: '#EAE4D7',
             },
             canopy: {
               DEFAULT: '#0A1936',
-              deep: '#061024',
-              muted: '#122D65',
+              deep: '#07132B',
+              muted: '#0F2758',
             },
             agri: {
-              50: '#0B2918',
-              100: '#134E2D',
+              50: '#F0FDF4',
+              100: '#DCFCE7',
               400: '#4ADE80',
               500: '#22C55E',
               600: '#16A34A',
@@ -62,9 +62,9 @@
               700: '#B45309',
             },
             ink: {
-              DEFAULT: '#F8FAFC',
-              secondary: '#CBD5E1',
-              muted: '#94A3B8',
+              DEFAULT: '#111C16',
+              secondary: '#3F4F46',
+              muted: '#64746B',
             }
           },
           fontFamily: {
@@ -92,20 +92,20 @@
       --duration-fast: 150ms;
       --duration-normal: 250ms;
 
-      --surface-canvas: #0A1936;
-      --surface-elevated: #07132B;
-      --surface-card: #0F2758;
+      --surface-canvas: #FAF7F2;
+      --surface-elevated: #F3EFE6;
+      --surface-card: #FFFFFF;
+      --surface-canopy: #0A1936;
 
       --shadow-card:
-        0 0 0 1px rgba(255, 255, 255, 0.08),
-        0 4px 16px -2px rgba(0, 0, 0, 0.4);
+        0 0 0 1px rgba(10, 25, 54, 0.08),
+        0 2px 6px -1px rgba(10, 25, 54, 0.06);
       --shadow-card-hover:
-        0 0 0 1px rgba(255, 255, 255, 0.18),
-        0 8px 24px -4px rgba(0, 0, 0, 0.5),
-        0 16px 32px -8px rgba(0, 0, 0, 0.6);
+        0 0 0 1px rgba(10, 25, 54, 0.16),
+        0 10px 24px -4px rgba(10, 25, 54, 0.1);
       --shadow-frame:
-        0 0 0 1px rgba(255, 255, 255, 0.12),
-        0 12px 32px -8px rgba(0, 0, 0, 0.5);
+        0 0 0 1px rgba(10, 25, 54, 0.1),
+        0 12px 32px -8px rgba(10, 25, 54, 0.08);
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -119,7 +119,7 @@
 
     body {
       background-color: var(--surface-canvas);
-      color: #F8FAFC;
+      color: #111C16;
       font-feature-settings: "cv02", "cv03", "cv04", "cv11";
       -webkit-font-smoothing: antialiased;
     }
@@ -146,7 +146,7 @@
     }
 
     .media-outline-light {
-      outline: 1px solid rgba(255, 255, 255, 0.1);
+      outline: 1px solid rgba(10, 25, 54, 0.08);
       outline-offset: -1px;
     }
 
@@ -158,7 +158,7 @@
     .surface-card {
       background: var(--surface-card);
       box-shadow: var(--shadow-card);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(10, 25, 54, 0.08);
       transition:
         transform var(--duration-normal) var(--ease-out),
         box-shadow var(--duration-normal) var(--ease-out),
@@ -168,7 +168,7 @@
     .surface-card:hover {
       transform: translateY(-2px);
       box-shadow: var(--shadow-card-hover);
-      border-color: rgba(255, 255, 255, 0.18);
+      border-color: rgba(10, 25, 54, 0.16);
     }
 
     .surface-frame {
@@ -205,8 +205,8 @@
       left: 0;
       height: 100%;
       border-radius: 9999px;
-      background-color: #143372;
-      border: 1px solid rgba(255, 255, 255, 0.18);
+      background-color: var(--surface-canopy);
+      border: 1px solid rgba(10, 25, 54, 0.2);
       pointer-events: none;
       z-index: 0;
       transition:
@@ -226,7 +226,7 @@
       position: fixed;
       inset: 0;
       z-index: 80;
-      background: rgba(4, 11, 28, 0.82);
+      background: rgba(10, 25, 54, 0.75);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       opacity: 0;
@@ -379,7 +379,7 @@
   <!-- =========================================================================
        CATALOG HEADER & INSTANT SEARCH BAR (Zero Eyebrow Slop)
   ========================================================================= -->
-  <section class="bg-canopy text-white pt-10 pb-10 px-4 sm:px-6 lg:px-8 border-b border-white/10">
+  <section class="bg-canopy text-white pt-10 pb-10 px-4 sm:px-6 lg:px-8 border-b border-black/[0.08]">
     <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
       <div class="lg:col-span-7 space-y-2.5">
         <h1 class="text-3xl sm:text-4xl lg:text-[42px] font-display font-extrabold text-white leading-tight">
@@ -393,7 +393,7 @@
       <!-- Instant Search Box -->
       <div class="lg:col-span-5">
         <div class="relative flex items-center">
-          <span class="absolute left-4 text-slate-400 pointer-events-none">
+          <span class="absolute left-4 text-ink-muted pointer-events-none">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
           </span>
           <input
@@ -402,10 +402,10 @@
             autocomplete="off"
             type="text"
             aria-label="Search products by name or code"
-            class="w-full rounded-full pl-11 pr-20 py-3.5 bg-[#0F2758] text-white placeholder-slate-400 text-sm font-medium border border-white/15 shadow-lg focus:outline-none focus:ring-2 focus:ring-harvest-400"
+            class="w-full rounded-full pl-11 pr-20 py-3.5 bg-white text-ink placeholder-ink-muted text-sm font-medium border border-black/[0.08] shadow-lg focus:outline-none focus:ring-2 focus:ring-harvest-400"
             placeholder="Search feeds, fertilizers, vaccines, seeds..."
           />
-          <button onclick="resetFilter()" id="clearSearchBtn" class="btn-press absolute right-3 text-slate-300 hover:text-white hidden text-xs font-display font-bold bg-white/10 px-3 py-1 rounded-full">
+          <button onclick="resetFilter()" id="clearSearchBtn" class="btn-press absolute right-3 text-ink-secondary hover:text-ink hidden text-xs font-display font-bold bg-canvas-stone px-3 py-1 rounded-full">
             Clear
           </button>
         </div>
@@ -416,7 +416,7 @@
   <!-- =========================================================================
        STICKY GROUP & SUBCATEGORY FILTER BAR (.t-tabs Sliding Pill)
   ========================================================================= -->
-  <section class="sticky top-[68px] z-40 bg-[#07132B]/95 backdrop-blur-md border-b border-white/10">
+  <section class="sticky top-[68px] z-40 bg-canvas/95 backdrop-blur-md border-b border-black/[0.08]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 space-y-2.5">
 
       <!-- Primary Product Groups with Sliding Pill Indicator -->
@@ -428,7 +428,7 @@
       </div>
 
       <!-- Subcategories Strip -->
-      <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-hide pt-2 border-t border-white/10" id="GridProdCategory"></div>
+      <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-hide pt-2 border-t border-black/[0.08]" id="GridProdCategory"></div>
 
     </div>
   </section>
@@ -438,16 +438,16 @@
   ========================================================================= -->
   <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
 
-    <div class="flex items-center justify-between mb-6 pb-3 border-b border-white/10">
+    <div class="flex items-center justify-between mb-6 pb-3 border-b border-black/[0.08]">
       <div>
-        <h2 class="text-lg sm:text-xl font-display font-extrabold text-white" id="activeCategoryTitle">
+        <h2 class="text-lg sm:text-xl font-display font-extrabold text-ink" id="activeCategoryTitle">
           Agricultural Chemicals
         </h2>
-        <p class="text-xs text-slate-400 mt-0.5">
-          Showing <span id="visibleProductCount" class="font-mono font-semibold text-harvest-400 tabular-nums">0</span> items &middot; Click any item for specifications
+        <p class="text-xs text-ink-secondary mt-0.5">
+          Showing <span id="visibleProductCount" class="font-mono font-semibold text-harvest-700 tabular-nums">0</span> items &middot; Click any item for specifications
         </p>
       </div>
-      <span class="font-mono text-[11px] font-semibold text-agri-400 bg-agri-500/15 border border-agri-500/30 px-2.5 py-1 rounded-md">
+      <span class="font-mono text-[11px] font-semibold text-agri-800 bg-agri-50 border border-agri-200 px-2.5 py-1 rounded-md">
         IN-STORE SUPPLY
       </span>
     </div>
@@ -457,14 +457,14 @@
 
     <!-- Empty State (Stroke SVG, Zero Emojis) -->
     <div id="emptyState" class="hidden py-16 text-center">
-      <div class="w-12 h-12 rounded-2xl bg-white/10 text-slate-400 flex items-center justify-center mx-auto mb-3">
+      <div class="w-12 h-12 rounded-2xl bg-canvas-stone text-ink-muted flex items-center justify-center mx-auto mb-3">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
       </div>
-      <h3 class="font-display font-bold text-lg text-white">No matching catalog items</h3>
-      <p class="text-slate-400 text-xs sm:text-sm mt-1 max-w-sm mx-auto">
+      <h3 class="font-display font-bold text-lg text-ink">No matching catalog items</h3>
+      <p class="text-ink-secondary text-xs sm:text-sm mt-1 max-w-sm mx-auto">
         Try clearing your search keyword or selecting another product division above.
       </p>
-      <button onclick="resetFilter()" class="btn-press mt-4 inline-flex items-center gap-2 bg-harvest-400 hover:bg-harvest-300 text-canopy-deep font-display font-bold text-xs px-5 py-2.5 rounded-full">
+      <button onclick="resetFilter()" class="btn-press mt-4 inline-flex items-center gap-2 bg-[#0A1936] hover:bg-[#07132B] text-white font-display font-bold text-xs px-5 py-2.5 rounded-full">
         Reset Filter
       </button>
     </div>
@@ -474,7 +474,7 @@
       <button
         id="loadMoreBtn"
         onclick="LoadMoreProducts()"
-        class="btn-press inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/15 font-display font-bold text-xs tracking-wide pl-6 pr-5 py-3.5 rounded-full"
+        class="btn-press inline-flex items-center gap-2 bg-[#0A1936] hover:bg-[#07132B] text-white font-display font-bold text-xs tracking-wide pl-6 pr-5 py-3.5 rounded-full"
       >
         <span>Load More Catalog Items</span>
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -487,18 +487,18 @@
        PRODUCT QUICK VIEW MODAL (Transitions.dev .t-modal)
   ========================================================================= -->
   <div id="productModal" class="t-modal-backdrop flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="modalProductName">
-    <div class="t-modal-dialog bg-[#0F2758] border border-white/15 rounded-[24px] p-2.5 max-w-2xl w-full surface-frame relative text-white">
-      <div class="rounded-[14px] bg-[#0F2758] border border-white/10 p-5 sm:p-7">
+    <div class="t-modal-dialog bg-white border border-black/10 rounded-[24px] p-2.5 max-w-2xl w-full surface-frame relative text-ink shadow-2xl">
+      <div class="rounded-[14px] bg-white p-5 sm:p-7">
         <button
           id="closeProductModal"
           aria-label="Close modal"
-          class="btn-press absolute top-5 right-5 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center"
+          class="btn-press absolute top-5 right-5 w-9 h-9 rounded-full bg-canvas-stone hover:bg-black/10 text-ink flex items-center justify-center"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
 
         <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-          <div class="md:col-span-5 flex items-center justify-center bg-[#07132B] rounded-[12px] p-4 aspect-square media-outline-dark">
+          <div class="md:col-span-5 flex items-center justify-center bg-canvas-stone rounded-[12px] p-4 aspect-square media-outline-light">
             <img
               id="modalProductImage"
               src="assets/cache/default-product.jpg"
@@ -512,24 +512,24 @@
           <div class="md:col-span-7 flex flex-col justify-between space-y-4">
             <div>
               <div class="flex items-center gap-2">
-                <span class="font-mono text-[11px] font-semibold text-agri-400 bg-agri-500/15 border border-agri-500/30 px-2.5 py-0.5 rounded">
+                <span class="font-mono text-[11px] font-semibold text-agri-800 bg-agri-50 border border-agri-200 px-2.5 py-0.5 rounded">
                   VERIFIED STOCK
                 </span>
-                <span id="modalProductSku" class="font-mono text-[11px] text-harvest-400 tabular-nums"></span>
+                <span id="modalProductSku" class="font-mono text-[11px] text-harvest-700 tabular-nums"></span>
               </div>
-              <h2 id="modalProductName" class="text-xl sm:text-2xl font-display font-extrabold text-white mt-2 leading-snug">
+              <h2 id="modalProductName" class="text-xl sm:text-2xl font-display font-extrabold text-ink mt-2 leading-snug">
                 Product Name
               </h2>
-              <div id="modalProductDescription" class="mt-3 text-slate-300 text-xs sm:text-sm space-y-1.5 leading-relaxed max-h-48 overflow-y-auto pr-2">
+              <div id="modalProductDescription" class="mt-3 text-ink-secondary text-xs sm:text-sm space-y-1.5 leading-relaxed max-h-48 overflow-y-auto pr-2">
                 Specifications available in store.
               </div>
             </div>
 
-            <div class="pt-4 border-t border-white/10 flex flex-wrap items-center gap-2.5">
+            <div class="pt-4 border-t border-black/[0.08] flex flex-wrap items-center gap-2.5">
               <a id="modalBranchLink" href="Branches.html" class="btn-press flex-1 text-center bg-harvest-400 hover:bg-harvest-300 text-canopy-deep font-display font-bold text-xs py-3 px-4 rounded-xl">
                 Find Nearest Branch
               </a>
-              <a href="https://www.facebook.com/farmstationofficial" target="_blank" rel="noopener noreferrer" class="btn-press flex-1 text-center bg-white/10 hover:bg-white/15 text-white border border-white/15 font-display font-bold text-xs py-3 px-4 rounded-xl">
+              <a href="https://www.facebook.com/farmstationofficial" target="_blank" rel="noopener noreferrer" class="btn-press flex-1 text-center bg-[#0A1936] hover:bg-[#07132B] text-white font-display font-bold text-xs py-3 px-4 rounded-xl">
                 Inquire on Facebook
               </a>
             </div>
@@ -780,7 +780,7 @@
       GridProdGroup.innerHTML = data.map((item, idx) => `
         <button
           type="button"
-          class="group-tab flex-shrink-0 px-4 py-2 rounded-full text-xs font-display font-bold tracking-wide ${idx === 0 ? 'text-white' : 'text-slate-300 hover:text-white'}"
+          class="group-tab flex-shrink-0 px-4 py-2 rounded-full text-xs font-display font-bold tracking-wide ${idx === 0 ? 'text-white' : 'text-ink-secondary hover:text-ink'}"
           data-groupcode="${item.GroupCode}"
           data-groupname="${escapeHtml(item.GroupName)}"
           data-active="${idx === 0 ? 'true' : 'false'}"
@@ -794,7 +794,7 @@
         tab.addEventListener("click", function () {
           tabs.forEach(t => {
             t.dataset.active = "false";
-            t.className = "group-tab flex-shrink-0 px-4 py-2 rounded-full text-xs font-display font-bold tracking-wide text-slate-300 hover:text-white";
+            t.className = "group-tab flex-shrink-0 px-4 py-2 rounded-full text-xs font-display font-bold tracking-wide text-ink-secondary hover:text-ink";
           });
           this.dataset.active = "true";
           this.className = "group-tab flex-shrink-0 px-4 py-2 rounded-full text-xs font-display font-bold tracking-wide text-white";
@@ -834,7 +834,7 @@
       }
 
       if (!data || !data.length) {
-        GridProdCategory.innerHTML = `<span class="text-xs text-slate-400 py-1">All items in this division</span>`;
+        GridProdCategory.innerHTML = `<span class="text-xs text-ink-muted py-1">All items in this division</span>`;
         SelectedCategoryCode = "";
         LoadProducts();
         return;
@@ -843,7 +843,7 @@
       GridProdCategory.innerHTML = data.map((item, idx) => `
         <button
           type="button"
-          class="category-btn btn-press flex-shrink-0 px-3 py-1 rounded-lg text-xs font-medium border ${idx === 0 ? 'bg-agri-600 text-white border-agri-500' : 'bg-[#0F2758] text-slate-300 border-white/10 hover:bg-[#143372] hover:text-white'}"
+          class="category-btn btn-press flex-shrink-0 px-3 py-1 rounded-lg text-xs font-medium border ${idx === 0 ? 'bg-[#0A1936] text-white border-[#0A1936]' : 'bg-white text-ink-secondary border-black/[0.08] hover:bg-canvas-stone hover:text-ink'}"
           data-categorycode="${item.CategoryCode}"
           data-categoryname="${escapeHtml(item.CategoryName)}"
         >
@@ -855,9 +855,9 @@
       buttons.forEach((btn, index) => {
         btn.addEventListener("click", function () {
           buttons.forEach(b => {
-            b.className = "category-btn btn-press flex-shrink-0 px-3 py-1 rounded-lg text-xs font-medium border bg-[#0F2758] text-slate-300 border-white/10 hover:bg-[#143372] hover:text-white";
+            b.className = "category-btn btn-press flex-shrink-0 px-3 py-1 rounded-lg text-xs font-medium border bg-white text-ink-secondary border-black/[0.08] hover:bg-canvas-stone hover:text-ink";
           });
-          this.className = "category-btn btn-press flex-shrink-0 px-3 py-1 rounded-lg text-xs font-medium border bg-agri-600 text-white border-agri-500";
+          this.className = "category-btn btn-press flex-shrink-0 px-3 py-1 rounded-lg text-xs font-medium border bg-[#0A1936] text-white border-[#0A1936]";
 
           SelectedCategoryCode = this.dataset.categorycode;
           currentPage = 1;
@@ -964,7 +964,7 @@
         card.dataset.productcode = p.ProductCode;
 
         card.innerHTML = `
-          <div class="relative aspect-square bg-[#07132B] rounded-[12px] overflow-hidden p-3 flex items-center justify-center media-outline-dark">
+          <div class="relative aspect-square bg-canvas-stone rounded-[12px] overflow-hidden p-3 flex items-center justify-center media-outline-light">
             <img
               src="${imageUrl}"
               alt="${safeName}"
@@ -977,8 +977,8 @@
             />
           </div>
           <div class="px-1.5 pt-2.5 pb-1 flex flex-col justify-between flex-1">
-            <span class="font-mono text-[10px] text-harvest-400 tabular-nums">SKU #${escapeHtml(p.ProductCode)}</span>
-            <p class="text-white text-xs font-display font-bold line-clamp-2 leading-snug mt-0.5 min-h-[32px]">
+            <span class="font-mono text-[10px] text-harvest-700 tabular-nums">SKU #${escapeHtml(p.ProductCode)}</span>
+            <p class="text-ink text-xs font-display font-bold line-clamp-2 leading-snug mt-0.5 min-h-[32px]">
               ${safeName}
             </p>
           </div>
